@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function NavMenu() {
   return (
-    <nav className="flex items-end pt-8 pr-8 justify-between">
+    <nav className="flex items-end pt-8 pr-16 justify-between w-full fixed">
       <Link href="/">
         <Image
           src="/coffeesurprise-logo.svg"
