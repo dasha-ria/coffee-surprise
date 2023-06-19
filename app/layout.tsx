@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} pl-8`}>
+      <body className={`${inter.className}`}>
         <NavMenu></NavMenu>
         {children}
       </body>

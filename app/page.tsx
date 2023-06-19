@@ -23,10 +23,12 @@ export default function Home() {
           alt="Picture of coffee bag"
         ></Image>
       </section>
-      <section className="h-screen">
-        <h2 className="text-2xl font-bold mt-60">
-          HIGH QUALITY THIRD <br></br>WAVE COFFEE.
-        </h2>
+      <section className="h-screen pt-60 bg-slate-50">
+        <div className="mx-12">
+          <h2 className="text-2xl font-bold">
+            HIGH QUALITY THIRD <br></br>WAVE COFFEE.
+          </h2>
+        </div>
         <div className="flex justify-center items-center">
           <Image
             className="h-96 w-auto"
@@ -74,6 +76,16 @@ export default function Home() {
             alt="Koppi logo"
           ></Image>
         </div>
+      </section>
+      <section className="h-screen pt-96 relative">
+        <h2 className="flex justify-center font-bold text-5xl">coffee facts</h2>
+        <Image
+          className="h-96 w-auto absolute bottom-0 left-1/2 transform -translate-x-1/2"
+          src="/coffeebag2-homepage.png"
+          alt="Coffee bag"
+          width="1000"
+          height="1000"
+        ></Image>
       </section>
     </div>
   );
