@@ -6,11 +6,11 @@ export function NavMenu() {
     <nav className="flex items-end pt-4 px-8 justify-between w-full fixed z-50 pb-4 bg-white/80 backdrop-blur-2xl">
       <Link href="/">
         <Image
-          src="/coffeesurprise-logo4.svg"
+          src="/coffeesurprise-logo.svg"
           alt="Coffee Surprise logo"
           width="50"
           height="50"
-          className="w-40 h-auto"
+          className="w-28 h-auto"
         ></Image>
       </Link>
       <ul className="flex gap-8">
