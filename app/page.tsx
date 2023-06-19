@@ -24,11 +24,9 @@ export default function Home() {
         ></Image>
       </section>
       <section className="h-screen pt-60 bg-slate-50">
-        <div className="mx-12">
-          <h2 className="text-2xl font-bold">
-            HIGH QUALITY THIRD <br></br>WAVE COFFEE.
-          </h2>
-        </div>
+        <h2 className="text-2xl font-bold text-center mx-12 w-fit">
+          HIGH QUALITY THIRD <br></br>WAVE COFFEE.
+        </h2>
         <div className="flex justify-center items-center">
           <Image
             className="h-96 w-auto"
@@ -86,6 +84,32 @@ export default function Home() {
           width="1000"
           height="1000"
         ></Image>
+      </section>
+      <section className="h-screen relative">
+        <video
+          autoPlay
+          loop
+          muted
+          className="w-full h-full object-cover z-0 absolute"
+        >
+          <source src="/farm-video.mp4" type="video/mp4"></source>
+        </video>
+        <h2 className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute">
+          FRESH FROM THE FARM.
+        </h2>
+      </section>
+      <section className="h-screen relative">
+        <video
+          autoPlay
+          loop
+          muted
+          className="w-full h-full object-cover z-0 absolute"
+        >
+          <source src="/coffee-video.mp4" type="video/mp4"></source>
+        </video>
+        <h2 className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute">
+          FOR YOU TO HAVE A GREAT <br></br>COFFEE EXPERIENCE.
+        </h2>
       </section>
     </div>
   );
