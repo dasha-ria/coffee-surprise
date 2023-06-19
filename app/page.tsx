@@ -75,16 +75,6 @@ export default function Home() {
           ></Image>
         </div>
       </section>
-      <section className="h-screen pt-96 relative">
-        <h2 className="flex justify-center font-bold text-5xl">coffee facts</h2>
-        <Image
-          className="h-96 w-auto absolute bottom-0 left-1/2 transform -translate-x-1/2"
-          src="/coffeebag2-homepage.png"
-          alt="Coffee bag"
-          width="1000"
-          height="1000"
-        ></Image>
-      </section>
       <section className="h-screen relative">
         <video
           autoPlay
@@ -98,6 +88,17 @@ export default function Home() {
           FRESH FROM THE FARM.
         </h2>
       </section>
+      <section className="h-screen pt-96 relative">
+        <h2 className="flex justify-center font-bold text-5xl">coffee facts</h2>
+        <Image
+          className="h-96 w-auto absolute bottom-0 left-1/2 transform -translate-x-1/2"
+          src="/coffeebag2-homepage.png"
+          alt="Coffee bag"
+          width="1000"
+          height="1000"
+        ></Image>
+      </section>
+
       <section className="h-screen relative">
         <video
           autoPlay

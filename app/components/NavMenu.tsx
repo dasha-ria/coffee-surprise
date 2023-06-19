@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export function NavMenu() {
   return (
-    <nav className="flex items-end pt-8 px-8 justify-between w-full fixed z-50">
+    <nav className="flex items-end pt-4 px-8 justify-between w-full fixed z-50 pb-4 bg-white/80 backdrop-blur-2xl">
       <Link href="/">
         <Image
-          src="/coffeesurprise-logo.svg"
+          src="/coffeesurprise-logo4.svg"
           alt="Coffee Surprise logo"
           width="50"
           height="50"
