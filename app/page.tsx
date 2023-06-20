@@ -1,19 +1,22 @@
+"use client";
+
 import Image from "next/image";
+import { TextReveal } from "./components/TextReveal";
+
+const TEXTS = ["Forest", "Building", "Tree", "Color"];
 
 export default function Home() {
   return (
     <div className="h-screen w-screen snap-y snap-mandatory overflow-scroll relative">
       <section className="h-screen w-screen flex justify-center snap-start">
-        <div className="flex flex-col gap-2 top-64 absolute">
-          <div>
-            <h1 className="font-bold text-5xl text-center">
-              GET A GOOD DOSE OF <br></br>COFFEE SURPRISE!
-            </h1>
-            <p className="text-center text-lg">
-              We select good quality coffe for you every month and deliver it{" "}
-              <br></br> to your door.
-            </p>
-          </div>
+        <div className="flex flex-col gap-4 top-64 absolute">
+          <h1 className="font-bold text-5xl text-center">
+            GET A GOOD DOSE OF <br></br>COFFEE SURPRISE!
+          </h1>
+          <p className="text-center text-lg">
+            We select good quality coffe for you every month and deliver it{" "}
+            <br></br> to your door.
+          </p>
         </div>
         <Image
           className="h-96 w-auto absolute bottom-0"
@@ -89,7 +92,8 @@ export default function Home() {
         </h2>
       </section>
       <section className="h-screen w-screen pt-96 relative snap-start">
-        <h2 className="flex justify-center font-bold text-5xl">coffee facts</h2>
+        <TextReveal></TextReveal>
+
         <Image
           className="h-96 w-auto absolute bottom-0 left-1/2 transform -translate-x-1/2"
           src="/coffeebag2-homepage.png"
