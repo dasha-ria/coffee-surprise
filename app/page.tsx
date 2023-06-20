@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>
-      <section className="h-screen flex justify-center">
+    <div className="h-screen w-screen snap-y snap-mandatory overflow-scroll relative">
+      <section className="h-screen w-screen flex justify-center snap-start">
         <div className="flex flex-col gap-2 top-64 absolute">
           <div>
             <h1 className="font-bold text-5xl text-center">
@@ -23,7 +23,7 @@ export default function Home() {
           alt="Picture of coffee bag"
         ></Image>
       </section>
-      <section className="h-screen pt-60 bg-slate-50">
+      <section className="h-screen w-screen pt-60 bg-slate-50 snap-start">
         <h2 className="text-2xl font-bold text-center mx-12 w-fit">
           HIGH QUALITY THIRD <br></br>WAVE COFFEE.
         </h2>
@@ -75,7 +75,7 @@ export default function Home() {
           ></Image>
         </div>
       </section>
-      <section className="h-screen relative">
+      <section className="h-screen w-screen relative snap-start">
         <video
           autoPlay
           loop
@@ -88,7 +88,7 @@ export default function Home() {
           FRESH FROM THE FARM.
         </h2>
       </section>
-      <section className="h-screen pt-96 relative">
+      <section className="h-screen w-screen pt-96 relative snap-start">
         <h2 className="flex justify-center font-bold text-5xl">coffee facts</h2>
         <Image
           className="h-96 w-auto absolute bottom-0 left-1/2 transform -translate-x-1/2"
@@ -99,7 +99,7 @@ export default function Home() {
         ></Image>
       </section>
 
-      <section className="h-screen relative">
+      <section className="h-screen w-screen relative snap-start">
         <video
           autoPlay
           loop
