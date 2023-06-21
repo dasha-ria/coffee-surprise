@@ -1,3 +1,3 @@
 export default function About() {
-  return <>about us</>;
+  return <p className="pt-32 pl-10">about us</p>;
 }
