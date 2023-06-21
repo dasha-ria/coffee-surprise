@@ -1,11 +1,24 @@
 "use client";
+import { motion, useScroll } from "framer-motion";
 
 import Image from "next/image";
 import { TextReveal } from "./components/TextReveal";
+import React, { useEffect } from "react";
 
 const TEXTS = ["Forest", "Building", "Tree", "Color"];
 
 export default function Home() {
+  const TextAnimate = {
+    offscreen: {
+      y: 20,
+      opacity: 0,
+    },
+    onscreen: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.8, ease: "easeIn" },
+    },
+  };
   return (
     <div className="h-screen w-screen snap-y snap-mandatory overflow-scroll relative">
       <section className="h-screen w-screen flex justify-center snap-start">
@@ -27,9 +40,16 @@ export default function Home() {
         ></Image>
       </section>
       <section className="h-screen w-screen pt-60 bg-slate-50 snap-start">
-        <h2 className="text-2xl font-bold text-center mx-12 w-fit">
+        <motion.h2
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{ once: false, amount: 1 }}
+          transition={{ duration: 0.5 }}
+          variants={TextAnimate}
+          className="text-2xl font-bold text-center mx-12 w-fit"
+        >
           HIGH QUALITY THIRD <br></br>WAVE COFFEE.
-        </h2>
+        </motion.h2>
         <div className="flex justify-center items-center">
           <Image
             className="h-96 w-auto"
@@ -87,9 +107,16 @@ export default function Home() {
         >
           <source src="/farm-video.mp4" type="video/mp4"></source>
         </video>
-        <h2 className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute">
+        <motion.h2
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{ once: false, amount: 1 }}
+          transition={{ duration: 0.5 }}
+          variants={TextAnimate}
+          className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute"
+        >
           FRESH FROM THE FARM.
-        </h2>
+        </motion.h2>
       </section>
       <section className="h-screen w-screen pt-96 relative snap-start">
         <TextReveal></TextReveal>
@@ -112,9 +139,16 @@ export default function Home() {
         >
           <source src="/coffee-video.mp4" type="video/mp4"></source>
         </video>
-        <h2 className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute">
+        <motion.h2
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{ once: false, amount: 1 }}
+          transition={{ duration: 0.5 }}
+          variants={TextAnimate}
+          className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute"
+        >
           FOR YOU TO HAVE A GREAT <br></br>COFFEE EXPERIENCE.
-        </h2>
+        </motion.h2>
       </section>
     </div>
   );
