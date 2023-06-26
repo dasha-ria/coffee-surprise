@@ -3,11 +3,35 @@ import { motion, useScroll } from "framer-motion";
 
 import Image from "next/image";
 import { TextReveal } from "./components/TextReveal";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const TEXTS = ["Forest", "Building", "Tree", "Color"];
+const images = [
+  "/brazil-4.jpg",
+  "/colombia.jpg",
+  "/ethiopia.jpg",
+  "/costa-rica2.jpg",
+];
 
 export default function Home() {
+  const [slideshow, setSlideshow] = useState(0);
+
+  function nextStep() {
+    if (slideshow === images.length - 1) {
+      setSlideshow(0);
+      return;
+    }
+    setSlideshow(slideshow + 1);
+  }
+
+  function previousStep() {
+    if (slideshow === 0) {
+      setSlideshow(images.length - 1);
+      return;
+    }
+    setSlideshow(slideshow - 1);
+  }
+
   const TextAnimate = {
     offscreen: {
       y: 20,
@@ -19,6 +43,7 @@ export default function Home() {
       transition: { duration: 0.8, ease: "easeIn" },
     },
   };
+
   return (
     <div className="h-screen w-screen snap-y snap-mandatory overflow-scroll relative">
       <section className="h-screen w-screen flex justify-center snap-start">
@@ -118,16 +143,32 @@ export default function Home() {
           FRESH FROM THE FARM.
         </motion.h2>
       </section>
-      <section className="h-screen w-screen pt-96 relative snap-start">
-        <TextReveal></TextReveal>
+      <section className=" relative h-screen w-screen pt-96 snap-start">
+        <h2 className="absolute z-30 text-6xl font-bold text-white">BRAZIL</h2>
 
-        <Image
-          className="h-96 w-auto absolute bottom-0 left-1/2 transform -translate-x-1/2"
-          src="/coffeebag2-homepage.png"
-          alt="Coffee bag"
-          width="1000"
-          height="1000"
-        ></Image>
+        <div>
+          <Image
+            className="absolute top-0 h-full w-full overflow-hidden object-cover z-10"
+            src={images[slideshow]}
+            alt="Coffee bag"
+            width="1000"
+            height="1000"
+          ></Image>
+          <div className="flex gap-8 z-50 absolute bottom-32">
+            <button
+              onClick={previousStep}
+              className="border border-2 border-white text-white p-2"
+            >
+              &lt;
+            </button>
+            <button
+              onClick={nextStep}
+              className="border border-2 border-white text-white p-2"
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
       </section>
 
       <section className="h-screen w-screen relative snap-start">
@@ -149,6 +190,26 @@ export default function Home() {
         >
           FOR YOU TO HAVE A GREAT <br></br>COFFEE EXPERIENCE.
         </motion.h2>
+      </section>
+      <section className="h-screen w-screen snap-start">
+        <h2 className="flex justify-center pt-52 pb-12 text-3xl font-bold">
+          Which coffee subscription is right for you?
+        </h2>
+
+        <div className="flex justify-around">
+          <div className="flex flex-col items-center">
+            <h3 className="font-bold text-lg">One-time use</h3>
+            <p>$50</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <h3 className="font-bold text-lg">Monthly</h3>
+            <p>$100</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <h3 className="font-bold text-lg">Every 2 months</h3>
+            <p>$180</p>
+          </div>
+        </div>
       </section>
     </div>
   );
