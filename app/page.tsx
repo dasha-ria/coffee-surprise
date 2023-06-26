@@ -166,8 +166,8 @@ export default function Home() {
           FRESH FROM THE FARM.
         </motion.h2>
       </section>
-      <section className=" relative h-screen w-screen pt-96 snap-start bg-black">
-        <div className="flex justify-center">
+      <section className="relative h-screen w-screen pt-96 snap-start bg-black">
+        <div className="flex justify-center items-center">
           <AnimatePresence initial={false} custom={direction}>
             <motion.h2
               key={texts[text]}
@@ -193,15 +193,24 @@ export default function Home() {
           </AnimatePresence>
         </div>
 
-        <div className="flex gap-8 z-50 absolute w-full justify-between px-8">
-          <button
-            onClick={previousStep}
-            className=" text-white text-4xl font-bold"
-          >
-            &lt;
+        <div className="flex gap-8 z-50 absolute w-full justify-between px-20">
+          <button onClick={previousStep} className="">
+            <Image
+              className="w-3 h-auto fill-white stroke-white"
+              src="/arrow-left.svg"
+              alt="Arrow left"
+              width="4"
+              height="4"
+            ></Image>
           </button>
           <button onClick={nextStep} className=" text-white text-4xl font-bold">
-            &gt;
+            <Image
+              className="w-3 h-auto text-white stroke-white fill-white"
+              src="/arrow-right.svg"
+              alt="Arrow right"
+              width="4"
+              height="4"
+            ></Image>
           </button>
         </div>
       </section>
