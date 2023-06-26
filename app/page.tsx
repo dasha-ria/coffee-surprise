@@ -1,35 +1,41 @@
 "use client";
-import { motion, useScroll } from "framer-motion";
-
+import { motion, useScroll, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { TextReveal } from "./components/TextReveal";
 import React, { useEffect, useState } from "react";
 
-const TEXTS = ["Forest", "Building", "Tree", "Color"];
+const texts = ["BRAZIL", "COLOMBIA", "ETHIOPIA", "COSTA RICA"];
 const images = [
-  "/brazil-4.jpg",
-  "/colombia.jpg",
-  "/ethiopia.jpg",
-  "/costa-rica2.jpg",
+  "/brazil-compressed.jpg",
+  "/colombia-compressed.jpg",
+  "/ethiopia-compressed.jpg",
+  "/costa-rica-compressed.jpg",
 ];
 
 export default function Home() {
   const [slideshow, setSlideshow] = useState(0);
+  const [text, setText] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   function nextStep() {
+    setDirection(1);
     if (slideshow === images.length - 1) {
       setSlideshow(0);
+      setText(0);
       return;
     }
     setSlideshow(slideshow + 1);
+    setText(text + 1);
   }
 
   function previousStep() {
+    setDirection(-1);
     if (slideshow === 0) {
       setSlideshow(images.length - 1);
+      setText(images.length - 1);
       return;
     }
     setSlideshow(slideshow - 1);
+    setText(text - 1);
   }
 
   const TextAnimate = {
@@ -41,6 +47,23 @@ export default function Home() {
       y: 0,
       opacity: 1,
       transition: { duration: 0.8, ease: "easeIn" },
+    },
+  };
+
+  const slideshowVariants = {
+    initial: (direction) => {
+      return { x: direction > 0 ? 300 : -300, opacity: 0.5 };
+    },
+    animate: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.1 },
+      },
+    },
+    exit: (direction) => {
+      return { x: direction > 0 ? -300 : 300, opacity: 0.5 };
     },
   };
 
@@ -143,31 +166,43 @@ export default function Home() {
           FRESH FROM THE FARM.
         </motion.h2>
       </section>
-      <section className=" relative h-screen w-screen pt-96 snap-start">
-        <h2 className="absolute z-30 text-6xl font-bold text-white">BRAZIL</h2>
+      <section className=" relative h-screen w-screen pt-96 snap-start bg-black">
+        <div className="flex justify-center">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.h2
+              key={texts[text]}
+              className="absolute z-30 text-6xl font-bold text-white"
+            >
+              {texts[text]}
+            </motion.h2>
+          </AnimatePresence>
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.img
+              variants={slideshowVariants}
+              animate="animate"
+              initial="initial"
+              exit="exit"
+              className="absolute top-0 h-full w-full overflow-hidden object-cover z-10"
+              src={images[slideshow]}
+              alt="Coffee bag"
+              width="1000"
+              height="1000"
+              key={images[slideshow]}
+              custom={direction}
+            ></motion.img>
+          </AnimatePresence>
+        </div>
 
-        <div>
-          <Image
-            className="absolute top-0 h-full w-full overflow-hidden object-cover z-10"
-            src={images[slideshow]}
-            alt="Coffee bag"
-            width="1000"
-            height="1000"
-          ></Image>
-          <div className="flex gap-8 z-50 absolute bottom-32">
-            <button
-              onClick={previousStep}
-              className="border border-2 border-white text-white p-2"
-            >
-              &lt;
-            </button>
-            <button
-              onClick={nextStep}
-              className="border border-2 border-white text-white p-2"
-            >
-              &gt;
-            </button>
-          </div>
+        <div className="flex gap-8 z-50 absolute w-full justify-between px-8">
+          <button
+            onClick={previousStep}
+            className=" text-white text-4xl font-bold"
+          >
+            &lt;
+          </button>
+          <button onClick={nextStep} className=" text-white text-4xl font-bold">
+            &gt;
+          </button>
         </div>
       </section>
 
