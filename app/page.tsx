@@ -194,7 +194,7 @@ export default function Home() {
         </div>
 
         <div className="flex gap-8 z-50 absolute w-full justify-between px-20">
-          <button onClick={previousStep} className="">
+          <button onClick={previousStep} className="-mt-4">
             <Image
               className="w-3 h-auto fill-white stroke-white"
               src="/arrow-left.svg"
@@ -203,7 +203,7 @@ export default function Home() {
               height="4"
             ></Image>
           </button>
-          <button onClick={nextStep} className=" text-white text-4xl font-bold">
+          <button onClick={nextStep} className="-mt-4">
             <Image
               className="w-3 h-auto text-white stroke-white fill-white"
               src="/arrow-right.svg"
