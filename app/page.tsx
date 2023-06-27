@@ -277,13 +277,14 @@ export default function Home() {
             <p>2 coffee bags</p>
             <p>Sent only once</p>
             <p>No need to cancel</p>
+            <p>Free delivery</p>
             <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
               Buy
             </button>
           </div>
           <div className="flex flex-col items-center">
             <h3 className="font-bold text-lg">Monthly</h3>
-            <p>Starting from $20</p>
+            <p>From $20/mo</p>
             <div className="flex gap-1 pt-4 pb-2">
               <Image
                 className="h-5 w-auto"
@@ -317,11 +318,13 @@ export default function Home() {
             <p>1, 2 or 4 coffee bags</p>
             <p>Sent monthly</p>
             <p>Can cancel anytime</p>
+            <p>Free delivery</p>
             <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
               Buy
             </button>
           </div>
         </motion.div>
+        <p className="flex justify-center mt-16">Next shipping date: 30 July</p>
       </section>
     </div>
   );
