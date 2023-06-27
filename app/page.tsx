@@ -3,9 +3,8 @@ import { motion, useScroll, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const texts = ["COFFEE FROM..", "BRAZIL", "COLOMBIA", "ETHIOPIA", "COSTA RICA"];
+const texts = ["BRAZIL", "COLOMBIA", "ETHIOPIA", "COSTA RICA"];
 const images = [
-  "/coffee-beans.jpg",
   "/brazil.jpg",
   "/colombia.jpg",
   "/ethiopia.jpg",
