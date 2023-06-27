@@ -10,7 +10,7 @@ export default function Subscribe() {
       transition={{ duration: 0.5 }}
       className="pt-32 pl-10"
     >
-      subscreb
+      <div></div>
     </motion.div>
   );
 }

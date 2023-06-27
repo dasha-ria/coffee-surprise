@@ -253,11 +253,11 @@ export default function Home() {
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="flex justify-around"
+          className="flex justify-center gap-48"
         >
           <div className="flex flex-col items-center">
-            <h3 className="font-bold text-lg">One-time trial</h3>
-            <p>$50</p>
+            <h3 className="font-bold text-lg">Try this month's coffee</h3>
+            <p>$40</p>
             <div className="flex gap-1 pt-4 pb-2">
               <Image
                 className="h-5 w-auto"
@@ -273,15 +273,8 @@ export default function Home() {
                 width="5"
                 height="5"
               ></Image>
-              <Image
-                className="h-5 w-auto"
-                src="/coffee-bean.svg"
-                alt="Coffee bean"
-                width="5"
-                height="5"
-              ></Image>
             </div>
-            <p>3 coffee bags</p>
+            <p>2 coffee bags</p>
             <p>Sent only once</p>
             <p>No need to cancel</p>
             <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
@@ -290,7 +283,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col items-center">
             <h3 className="font-bold text-lg">Monthly</h3>
-            <p>$50</p>
+            <p>Starting from $20</p>
             <div className="flex gap-1 pt-4 pb-2">
               <Image
                 className="h-5 w-auto"
@@ -313,50 +306,16 @@ export default function Home() {
                 width="5"
                 height="5"
               ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
             </div>
-            <p>3 coffee bags</p>
+            <p>1, 2 or 4 coffee bags</p>
             <p>Sent monthly</p>
-            <p>Can cancel anytime</p>
-            <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
-              Buy
-            </button>
-          </div>
-          <div className="flex flex-col items-center">
-            <h3 className="font-bold text-lg">Every 2 months</h3>
-            <p>$60</p>
-
-            <div className="flex gap-1 pt-4 pb-2">
-              <Image
-                className="h-5 w-auto"
-                src="/coffee-bean.svg"
-                alt="Coffee bean"
-                width="5"
-                height="5"
-              ></Image>
-              <Image
-                className="h-5 w-auto"
-                src="/coffee-bean.svg"
-                alt="Coffee bean"
-                width="5"
-                height="5"
-              ></Image>
-              <Image
-                className="h-5 w-auto"
-                src="/coffee-bean.svg"
-                alt="Coffee bean"
-                width="5"
-                height="5"
-              ></Image>
-              <Image
-                className="h-5 w-auto"
-                src="/coffee-bean.svg"
-                alt="Coffee bean"
-                width="5"
-                height="5"
-              ></Image>
-            </div>
-            <p>4 coffee bags</p>
-            <p>Sent every 2 months</p>
             <p>Can cancel anytime</p>
             <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
               Buy
