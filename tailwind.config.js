@@ -15,6 +15,9 @@ module.exports = {
       height: {
         "menu-underline": "1px",
       },
+      colors: {
+        "theme-red": "#690000",
+      },
     },
   },
   plugins: [],

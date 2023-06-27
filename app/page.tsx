@@ -3,12 +3,13 @@ import { motion, useScroll, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const texts = ["BRAZIL", "COLOMBIA", "ETHIOPIA", "COSTA RICA"];
+const texts = ["COFFEE FROM..", "BRAZIL", "COLOMBIA", "ETHIOPIA", "COSTA RICA"];
 const images = [
-  "/brazil-compressed.jpg",
-  "/colombia-compressed.jpg",
-  "/ethiopia-compressed.jpg",
-  "/costa-rica-compressed.jpg",
+  "/coffee-beans.jpg",
+  "/brazil.jpg",
+  "/colombia.jpg",
+  "/ethiopia.jpg",
+  "/costa-rica.jpg",
 ];
 
 export default function Home() {
@@ -236,24 +237,133 @@ export default function Home() {
         </motion.h2>
       </section>
       <section className="h-screen w-screen snap-start">
-        <h2 className="flex justify-center pt-52 pb-12 text-3xl font-bold">
+        <motion.h2
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{ once: false, amount: 1 }}
+          transition={{ duration: 0.5 }}
+          variants={TextAnimate}
+          className="flex justify-center pt-52 pb-12 text-3xl font-bold"
+        >
           Which coffee subscription is right for you?
-        </h2>
+        </motion.h2>
 
-        <div className="flex justify-around">
+        <motion.div
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{ once: false, amount: 1 }}
+          transition={{ duration: 0.5 }}
+          variants={TextAnimate}
+          className="flex justify-around"
+        >
           <div className="flex flex-col items-center">
-            <h3 className="font-bold text-lg">One-time use</h3>
+            <h3 className="font-bold text-lg">One-time trial</h3>
             <p>$50</p>
+            <div className="flex gap-1 pt-4 pb-2">
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+            </div>
+            <p>3 coffee bags</p>
+            <p>Sent only once</p>
+            <p>No need to cancel</p>
+            <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
+              Buy
+            </button>
           </div>
           <div className="flex flex-col items-center">
             <h3 className="font-bold text-lg">Monthly</h3>
-            <p>$100</p>
+            <p>$50</p>
+            <div className="flex gap-1 pt-4 pb-2">
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+            </div>
+            <p>3 coffee bags</p>
+            <p>Sent monthly</p>
+            <p>Can cancel anytime</p>
+            <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
+              Buy
+            </button>
           </div>
           <div className="flex flex-col items-center">
             <h3 className="font-bold text-lg">Every 2 months</h3>
-            <p>$180</p>
+            <p>$60</p>
+
+            <div className="flex gap-1 pt-4 pb-2">
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+              <Image
+                className="h-5 w-auto"
+                src="/coffee-bean.svg"
+                alt="Coffee bean"
+                width="5"
+                height="5"
+              ></Image>
+            </div>
+            <p>4 coffee bags</p>
+            <p>Sent every 2 months</p>
+            <p>Can cancel anytime</p>
+            <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
+              Buy
+            </button>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
