@@ -324,7 +324,16 @@ export default function Home() {
             </button>
           </div>
         </motion.div>
-        <p className="flex justify-center mt-16">Next shipping date: 30 July</p>
+        <motion.p
+          className="flex justify-center mt-16"
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{ once: false, amount: 1 }}
+          transition={{ duration: 0.5 }}
+          variants={TextAnimate}
+        >
+          Next shipping date: 30 July
+        </motion.p>
       </section>
     </div>
   );
