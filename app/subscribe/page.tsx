@@ -2,8 +2,19 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import { useState } from "react";
 
 export default function Subscribe() {
+  const [isShown, setIsShown] = useState(false);
+
+  const showCoffeeBagChoose = () => {
+    setIsShown(true);
+  };
+
+  const hideCoffeeBagChoose = () => {
+    setIsShown(false);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,31 +35,6 @@ export default function Subscribe() {
           className="h-80 w-auto mt-20"
         ></Image>
 
-        {/* <div className="flex flex-col gap-4">
-          <div className="border border-black rounded-md w-80 pl-4 py-4 focus:border-theme-red">
-            <p className="text-lg font-bold">Try this month's coffee!</p>
-            <p>$40</p>
-            <p>2 coffee bags</p>
-          </div>
-          <div className="border border-black rounded-md w-80 pl-4 py-4">
-            <p className="text-lg font-bold">Monthly subscription</p>
-            <p>From $20/mo</p>
-            <div className="flex gap-2 items-center mt-4">
-              <button className="py-1 px-3 border border-black text-black rounded-md">
-                1
-              </button>
-              <button className="py-1 px-3 border border-black text-black text-black rounded-md">
-                2
-              </button>
-              <button className="py-1 px-3 border border-black text-black text-black rounded-md">
-                4
-              </button>
-              <p>
-                coffee <span>bags</span>
-              </p>
-            </div>
-          </div>
-        </div> */}
         <form>
           <RadioGroup.Root
             className="flex flex-col gap-2.5"
@@ -58,8 +44,9 @@ export default function Subscribe() {
             <div className="flex items-center">
               <RadioGroup.Item
                 className="flex flex-col w-80 pl-4 py-4 rounded-lg border-[1px] border-black data-[state=checked]:border-blue-600 data-[state=checked]:border-2"
-                value="default"
+                value="onetime"
                 id="r1"
+                onClick={hideCoffeeBagChoose}
               >
                 <label
                   className="text-black cursor-pointer text-lg font-bold"
@@ -74,8 +61,9 @@ export default function Subscribe() {
             <div className="flex items-center">
               <RadioGroup.Item
                 className="flex flex-col w-80 p-4 rounded-lg border-[1px] border-black data-[state=checked]:border-blue-600 data-[state=checked]:border-2"
-                value="example"
+                value="monthly"
                 id="r2"
+                onClick={showCoffeeBagChoose}
               >
                 <label
                   className="text-black cursor-pointer text-lg font-bold"
@@ -84,9 +72,60 @@ export default function Subscribe() {
                   Monthly subscription
                 </label>
                 <p>From $20/mo</p>
+                <p>1, 2 or 4 coffee bags</p>
               </RadioGroup.Item>
             </div>
           </RadioGroup.Root>
+          {isShown && (
+            <motion.div
+              className="mt-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p>
+                Choose how many coffee bags you'd like <br></br> to receive
+                monthly
+              </p>
+              <RadioGroup.Root
+                className="flex gap-4 items-center mt-4"
+                defaultValue="none"
+                aria-label="View density"
+              >
+                <RadioGroup.Item
+                  className="py-1 px-3 border border-black rounded-md data-[state=checked]:border-blue-600 data-[state=checked]:border-2"
+                  value="onebag"
+                  id="onebag"
+                >
+                  <label className="cursor-pointer text-black" htmlFor="onebag">
+                    1
+                  </label>
+                </RadioGroup.Item>
+                <RadioGroup.Item
+                  className="py-1 px-3 border border-black rounded-md data-[state=checked]:border-blue-600 data-[state=checked]:border-2"
+                  value="twobag"
+                  id="twobag"
+                >
+                  <label className="cursor-pointer text-black" htmlFor="twobag">
+                    2
+                  </label>
+                </RadioGroup.Item>
+                <RadioGroup.Item
+                  className="py-1 px-3 border border-black rounded-md data-[state=checked]:border-blue-600 data-[state=checked]:border-2"
+                  value="fourbag"
+                  id="fourbag"
+                >
+                  <label
+                    className="cursor-pointer text-black"
+                    htmlFor="fourbag"
+                  >
+                    4
+                  </label>
+                </RadioGroup.Item>
+              </RadioGroup.Root>
+            </motion.div>
+          )}
         </form>
       </div>
       <div className="pl-8 flex gap-12">
