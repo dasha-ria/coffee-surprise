@@ -1,6 +1,7 @@
 "use client";
 import { motion, useScroll, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const texts = ["BRAZIL", "COLOMBIA", "ETHIOPIA", "COSTA RICA"];
@@ -278,9 +279,11 @@ export default function Home() {
             <p>Sent only once</p>
             <p>No need to cancel</p>
             <p>Free delivery</p>
-            <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
-              Buy
-            </button>
+            <Link href="/subscribe">
+              <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
+                Buy
+              </button>
+            </Link>
           </div>
           <div className="flex flex-col items-center">
             <h3 className="font-bold text-lg">Monthly</h3>
@@ -319,9 +322,11 @@ export default function Home() {
             <p>Sent monthly</p>
             <p>Can cancel anytime</p>
             <p>Free delivery</p>
-            <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
-              Buy
-            </button>
+            <Link href="/subscribe">
+              <button className="py-1 px-4 bg-theme-red text-white rounded-full text-sm mt-2">
+                Buy
+              </button>
+            </Link>
           </div>
         </motion.div>
         <motion.p
