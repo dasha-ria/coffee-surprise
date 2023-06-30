@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Subscribe() {
   const [isShown, setIsShown] = useState(false);
@@ -119,9 +120,11 @@ export default function Subscribe() {
               </RadioGroup.Item>
             </RadioGroup.Root>
           </div>
-          <button className="mt-8 py-2 px-4 rounded-full bg-theme-red text-white">
-            Checkout
-          </button>
+          <Link href="/checkout">
+            <button className="mt-8 py-2 px-4 rounded-full bg-theme-red text-white">
+              Checkout
+            </button>
+          </Link>
         </form>
       </div>
       <div className="pl-8 flex gap-12">
