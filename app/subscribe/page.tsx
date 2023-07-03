@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export default function Subscribe() {
   const [isShown, setIsShown] = useState(false);
+  const [selectedBags, setSelectedBags] = useState("1");
 
   const showCoffeeBagChoose = () => {
     setIsShown(true);
@@ -14,6 +15,38 @@ export default function Subscribe() {
 
   const hideCoffeeBagChoose = () => {
     setIsShown(false);
+  };
+
+  const handleBagsChange = (value) => {
+    setSelectedBags(value);
+
+    const selection = {
+      subscriptionType: "monthly",
+      bagsPerMonth: value,
+    };
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("subscriptionChoice", JSON.stringify(selection));
+    }
+  };
+
+  const handleOneTimePurchase = () => {
+    const selection = { subscriptionType: "one-time" };
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("subscriptionChoice", JSON.stringify(selection));
+    }
+  };
+
+  const handleMonthlySubscription = () => {
+    const selection = {
+      subscriptionType: "monthly",
+      bagsPerMonth: selectedBags,
+    };
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("subscriptionChoice", JSON.stringify(selection));
+    }
   };
 
   return (
@@ -47,7 +80,10 @@ export default function Subscribe() {
                 className="flex flex-col w-80 pl-4 py-4 rounded-lg border-2 border-gray-400 data-[state=checked]:border-blue-600"
                 value="onetime"
                 id="r1"
-                onClick={hideCoffeeBagChoose}
+                onClick={() => {
+                  hideCoffeeBagChoose();
+                  handleOneTimePurchase();
+                }}
               >
                 <label
                   className="text-black cursor-pointer text-lg font-bold"
@@ -64,7 +100,10 @@ export default function Subscribe() {
                 className="flex flex-col w-80 p-4 rounded-lg border-2 border-gray-400 data-[state=checked]:border-blue-600"
                 value="monthly"
                 id="r2"
-                onClick={showCoffeeBagChoose}
+                onClick={() => {
+                  showCoffeeBagChoose();
+                  handleMonthlySubscription();
+                }}
               >
                 <label
                   className="text-black cursor-pointer text-lg font-bold"
@@ -85,12 +124,13 @@ export default function Subscribe() {
             </p>
             <RadioGroup.Root
               className="flex flex-col gap-2 items-center mt-4"
-              defaultValue="none"
+              value={selectedBags}
+              onValueChange={handleBagsChange}
               aria-label="View density"
             >
               <RadioGroup.Item
                 className="flex justify-between items-center w-80 py-2 px-3 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-                value="onebag"
+                value="1"
                 id="onebag"
               >
                 <label className="cursor-pointer text-black" htmlFor="onebag">
@@ -100,7 +140,7 @@ export default function Subscribe() {
               </RadioGroup.Item>
               <RadioGroup.Item
                 className="flex justify-between items-center w-80 py-2 px-3 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-                value="twobag"
+                value="2"
                 id="twobag"
               >
                 <label className="cursor-pointer text-black" htmlFor="twobag">
@@ -110,7 +150,7 @@ export default function Subscribe() {
               </RadioGroup.Item>
               <RadioGroup.Item
                 className="flex justify-between items-center w-80 py-2 px-3 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-                value="fourbag"
+                value="4"
                 id="fourbag"
               >
                 <label className="cursor-pointer text-black" htmlFor="fourbag">

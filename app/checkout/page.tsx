@@ -1,13 +1,30 @@
 "use client";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Checkout() {
+  const [subscriptionChoice, setSubscriptionChoice] = useState("null");
+
   const maxLengthCheck = (e) => {
     if (e.target.value.length > e.target.maxLength) {
       e.target.value = e.target.value.slice(0, e.target.maxLength);
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedSubscriptionChoice =
+        localStorage.getItem("subscriptionChoice");
+
+      if (storedSubscriptionChoice) {
+        setSubscriptionChoice(JSON.parse(storedSubscriptionChoice));
+      }
+    }
+  }, []);
+
+  const { subscriptionType, bagsPerMonth } = subscriptionChoice;
+
   return (
     <div className="pt-40 pl-10">
       <h2 className="text-2xl font-bold">
@@ -74,10 +91,21 @@ export default function Checkout() {
 
       <h3 className="font-semibold text-xl mt-12">Order summary</h3>
       <div className="mt-2 border-2 border-black py-4 px-4 rounded-md w-80">
-        <p className="font-medium text-lg">Monthly subscription</p>
-        <p>
-          <span>2</span> coffee bags
-        </p>
+        {subscriptionType === "one-time" && (
+          <p className="font-medium text-lg">Try this month's coffee!</p>
+        )}
+        {subscriptionType === "monthly" && (
+          <p className="font-medium text-lg">Monthly subscription</p>
+        )}
+        <div className="flex gap-1">
+          {subscriptionType === "monthly" && <span>{bagsPerMonth} </span>}
+          {subscriptionType === "one-time" && <p>2 </p>}
+          {subscriptionType === "monthly" && bagsPerMonth === "1" ? (
+            <p>coffee bag</p>
+          ) : (
+            <p>coffee bags</p>
+          )}
+        </div>
       </div>
 
       <h4 className="font-medium text-lg mt-6">Your delivery method:</h4>
