@@ -2,12 +2,34 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import * as RadioGroup from "@radix-ui/react-radio-group";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+
+type OrderSelection = {
+  subscriptionType: "one-time" | "monthly";
+  bagsPerMonth?: string;
+};
 
 export default function Subscribe() {
   const [isShown, setIsShown] = useState(false);
+  const [choice, setChoice] = useState<"one-time" | "monthly" | null>(null);
   const [selectedBags, setSelectedBags] = useState("1");
+
+  useEffect(() => {
+    if (!choice) {
+      return;
+    }
+
+    const selection: OrderSelection = {
+      subscriptionType: choice,
+    };
+
+    if (choice === "monthly") {
+      selection.bagsPerMonth = selectedBags;
+    }
+
+    localStorage.setItem("subscriptionChoice", JSON.stringify(selection));
+  }, [choice, selectedBags]);
 
   const showCoffeeBagChoose = () => {
     setIsShown(true);
@@ -19,34 +41,21 @@ export default function Subscribe() {
 
   const handleBagsChange = (value) => {
     setSelectedBags(value);
+    setWarning(null);
+  };
 
-    const selection = {
-      subscriptionType: "monthly",
-      bagsPerMonth: value,
-    };
-
-    if (typeof window !== "undefined") {
-      localStorage.setItem("subscriptionChoice", JSON.stringify(selection));
+  const mandatoryChoice = () => {
+    if (typeof window === "undefined") {
+      setWarning("Please make a selection.");
     }
   };
 
   const handleOneTimePurchase = () => {
-    const selection = { subscriptionType: "one-time" };
-
-    if (typeof window !== "undefined") {
-      localStorage.setItem("subscriptionChoice", JSON.stringify(selection));
-    }
+    setChoice("one-time");
   };
 
   const handleMonthlySubscription = () => {
-    const selection = {
-      subscriptionType: "monthly",
-      bagsPerMonth: selectedBags,
-    };
-
-    if (typeof window !== "undefined") {
-      localStorage.setItem("subscriptionChoice", JSON.stringify(selection));
-    }
+    setChoice("monthly");
   };
 
   return (
@@ -60,7 +69,7 @@ export default function Subscribe() {
       <h2 className="text-2xl font-bold">
         Which subscription is right for you?
       </h2>
-      <div className="flex items-center gap-12 mt-8">
+      <div className="flex items-center gap-12 mt-2">
         <Image
           src="/coffee-homepage-2.png"
           alt="coffee bags"
@@ -160,11 +169,23 @@ export default function Subscribe() {
               </RadioGroup.Item>
             </RadioGroup.Root>
           </div>
-          <Link href="/checkout">
-            <button className="mt-8 py-2 px-4 rounded-full bg-theme-red text-white">
-              Checkout
-            </button>
-          </Link>
+          {choice === null && (
+            <div>
+              <button
+                disabled
+                className="mt-8 py-2 px-4 rounded-full bg-theme-red/50 text-white cursor-not-allowed"
+              >
+                Checkout
+              </button>
+            </div>
+          )}
+          {choice !== null && (
+            <Link href="/checkout">
+              <button className="mt-8 py-2 px-4 rounded-full bg-theme-red text-white">
+                Checkout
+              </button>
+            </Link>
+          )}
         </form>
       </div>
       <div className="pl-8 flex gap-12">
