@@ -1,6 +1,7 @@
 "use client";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Checkout() {
@@ -118,9 +119,11 @@ export default function Checkout() {
         <p>FREE</p>
       </div> */}
 
-      <button className="mt-8 py-2 px-4 rounded-full bg-theme-red text-white">
-        Continue to shipping
-      </button>
+      <Link href="/shipping">
+        <button className="mt-8 py-2 px-4 rounded-full bg-theme-red text-white">
+          Continue to shipping
+        </button>
+      </Link>
     </div>
   );
 }
