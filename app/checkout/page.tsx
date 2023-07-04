@@ -5,7 +5,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Checkout() {
+  const [pickUpShown, setPickUpShown] = useState(false);
   const [subscriptionChoice, setSubscriptionChoice] = useState("null");
+
+  const havePickUp = () => {
+    setPickUpShown(true);
+  };
+
+  const haveDelivered = () => {
+    setPickUpShown(false);
+  };
 
   const maxLengthCheck = (e) => {
     if (e.target.value.length > e.target.maxLength) {
@@ -39,6 +48,7 @@ export default function Checkout() {
           className="flex gap-4 mt-4"
         >
           <RadioGroup.Item
+            onClick={haveDelivered}
             value="delivery"
             id="delivery"
             className="flex justify-center items-center gap-2 py-6 w-64 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
@@ -55,6 +65,7 @@ export default function Checkout() {
             </label>
           </RadioGroup.Item>
           <RadioGroup.Item
+            onClick={havePickUp}
             value="pickup"
             id="pickup"
             className="flex justify-center items-center gap-2 py-6 w-64 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
@@ -85,10 +96,12 @@ export default function Checkout() {
         ></input>
       </form> */}
 
-      {/* <p className="mt-4">Pick-up location:</p>
-      <p>
-        Asdasd asdasd, <br></br>28231 Los Angeles CA
-      </p> */}
+      <div className={`mt-4 ${!pickUpShown ? "invisible" : ""}`}>
+        <p className="mt-4 font-semibold text-lg">Pick-up location:</p>
+        <p>
+          5000 Wilshire Blvd <br></br>Los Angeles, CA
+        </p>
+      </div>
 
       <h3 className="font-semibold text-xl mt-12">Order summary</h3>
       <div className="mt-2 border-2 border-black py-4 px-4 rounded-md w-80">
@@ -114,10 +127,6 @@ export default function Checkout() {
         <p className="font-medium">Delivers Mon, Aug 3</p>
         <p>FREE</p>
       </div>
-      {/* <div className="mt-2 flex border-2 border-black py-4 px-4 rounded-md justify-between w-80">
-        <p className="font-medium">Pick up Mon, Aug 3</p>
-        <p>FREE</p>
-      </div> */}
 
       <Link href="/shipping">
         <button className="mt-8 py-2 px-4 rounded-full bg-theme-red text-white">
