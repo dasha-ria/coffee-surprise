@@ -41,13 +41,6 @@ export default function Subscribe() {
 
   const handleBagsChange = (value) => {
     setSelectedBags(value);
-    setWarning(null);
-  };
-
-  const mandatoryChoice = () => {
-    if (typeof window === "undefined") {
-      setWarning("Please make a selection.");
-    }
   };
 
   const handleOneTimePurchase = () => {
