@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 export default function Checkout() {
   const [pickUpShown, setPickUpShown] = useState(false);
   const [subscriptionChoice, setSubscriptionChoice] = useState("null");
-  const [inputValue, setInputValue] = useState("");
+  const [creditInputValue, setCreditInputValue] = useState("");
+  const [expiryInputValue, setExpiryInputValue] = useState("");
 
   const havePickUp = () => {
     setPickUpShown(true);
@@ -34,7 +35,21 @@ export default function Checkout() {
       formatted += val[i];
     }
 
-    setInputValue(formatted);
+    setCreditInputValue(formatted);
+  };
+
+  const expiryDateSeparator = (e) => {
+    const val = e.target.value.replace(/[^\d]/g, ""); // replace non digit characters
+    let formatted = "";
+
+    for (let i = 0; i < val.length; i++) {
+      if (i > 0 && i % 2 === 0) {
+        formatted += "/";
+      }
+      formatted += val[i];
+    }
+
+    setExpiryInputValue(formatted);
   };
 
   useEffect(() => {
@@ -244,7 +259,7 @@ export default function Checkout() {
                 maxLength="19"
                 onInput={maxLengthCheck}
                 onChange={creditCardSpace}
-                value={inputValue}
+                value={creditInputValue}
                 id="cardnumber"
                 placeholder="1234 5678 9012 3456"
                 className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
@@ -257,9 +272,11 @@ export default function Checkout() {
                 </label>
                 <input
                   id="expiry"
-                  maxLength="4"
+                  maxLength="5"
                   onInput={maxLengthCheck}
-                  type="number"
+                  onChange={expiryDateSeparator}
+                  type="text"
+                  value={expiryInputValue}
                   placeholder="01/19"
                   className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                 ></input>
@@ -273,7 +290,7 @@ export default function Checkout() {
                   maxLength="3"
                   onInput={maxLengthCheck}
                   type="number"
-                  placeholder="***"
+                  placeholder="123"
                   className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                 ></input>
               </div>
