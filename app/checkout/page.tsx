@@ -2,9 +2,11 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Checkout() {
+  const router = useRouter();
   const [subscriptionChoice, setSubscriptionChoice] = useState("null");
   const [creditInputValue, setCreditInputValue] = useState("");
   const [expiryInputValue, setExpiryInputValue] = useState("");
@@ -52,6 +54,11 @@ export default function Checkout() {
     setExpiryInputValue(formatted);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    router.push("/shipping");
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedSubscriptionChoice =
@@ -64,6 +71,17 @@ export default function Checkout() {
   }, []);
 
   const { subscriptionType, bagsPerMonth } = subscriptionChoice;
+
+  function NumberOnlyInput(props) {
+    const handleKeyDown = (e) => {
+      const { key } = e;
+      if (!/[0-9]/.test(key)) {
+        e.preventDefault();
+      }
+    };
+
+    return <input type="text" onKeyDown={handleKeyDown} {...props}></input>;
+  }
 
   return (
     <div className="pt-32 pl-10 flex gap-16">
@@ -122,7 +140,7 @@ export default function Checkout() {
       </div> */}
       <div>
         <h3 className="font-semibold text-2xl">Shipping</h3>
-        <form className="mt-2 flex flex-col gap-3">
+        <form className="mt-2 flex flex-col gap-3" onSubmit={handleSubmit}>
           <div className="flex flex-col w-80">
             <label htmlFor="firstname" className="text-sm">
               First name
@@ -130,6 +148,7 @@ export default function Checkout() {
             <input
               type="text"
               placeholder="John"
+              required
               className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
             ></input>
           </div>
@@ -140,6 +159,7 @@ export default function Checkout() {
             <input
               type="text"
               placeholder="Doe"
+              required
               className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
             ></input>
           </div>
@@ -150,6 +170,7 @@ export default function Checkout() {
             <input
               type="text"
               placeholder="johndoe@gmail.com"
+              required
               className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
             ></input>
           </div>
@@ -157,13 +178,14 @@ export default function Checkout() {
             <label htmlFor="firstname" className="text-sm">
               Phone number
             </label>
-            <input
+            <NumberOnlyInput
               maxLength="10"
+              minLength="10"
               onInput={maxLengthCheck}
-              type="text"
               placeholder="1234567890"
+              required
               className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></input>
+            ></NumberOnlyInput>
           </div>
           <div className="flex flex-col gap-1 w-80">
             <label htmlFor="firstname" className="text-sm">
@@ -172,6 +194,7 @@ export default function Checkout() {
             <input
               type="text"
               placeholder="123 Main St"
+              required
               className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
             ></input>
           </div>
@@ -179,13 +202,14 @@ export default function Checkout() {
             <label htmlFor="firstname" className="text-sm">
               Postcode
             </label>
-            <input
-              type="text"
+            <NumberOnlyInput
               placeholder="12345"
               maxLength="5"
+              minLength="5"
               onInput={maxLengthCheck}
+              required
               className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></input>
+            ></NumberOnlyInput>
           </div>
           <div className="flex flex-col gap-1 w-80">
             <label htmlFor="firstname" className="text-sm">
@@ -194,19 +218,21 @@ export default function Checkout() {
             <input
               type="text"
               placeholder="Fresno"
+              required
               className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
             ></input>
           </div>
-        </form>
 
-        <h3 className="font-semibold text-2xl mt-8">Payment</h3>
-        <form>
+          <h3 className="font-semibold text-2xl mt-8">Payment</h3>
+
           <RadioGroup.Root
-            defaultValue="none"
             aria-label="View density"
+            aria-checked
             className="flex gap-4 mt-4"
+            required
           >
             <RadioGroup.Item
+              aria-checked
               onClick={hideCreditForm}
               value="applepay"
               id="applepay"
@@ -221,6 +247,7 @@ export default function Checkout() {
               ></Image>
             </RadioGroup.Item>
             <RadioGroup.Item
+              aria-checked
               onClick={showCreditForm}
               value="creditcard"
               id="creditcard"
@@ -256,11 +283,11 @@ export default function Checkout() {
                   Credit card number
                 </label>
                 <input
-                  type="text"
                   maxLength="19"
                   onInput={maxLengthCheck}
                   onChange={creditCardSpace}
                   value={creditInputValue}
+                  required
                   id="cardnumber"
                   placeholder="1234 5678 9012 3456"
                   className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
@@ -276,9 +303,9 @@ export default function Checkout() {
                     maxLength="5"
                     onInput={maxLengthCheck}
                     onChange={expiryDateSeparator}
-                    type="text"
                     value={expiryInputValue}
                     placeholder="01/19"
+                    required
                     className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                   ></input>
                 </div>
@@ -287,23 +314,25 @@ export default function Checkout() {
                     Security code
                   </label>
                   <input
+                    type="number"
                     id="security"
                     maxLength="3"
                     onInput={maxLengthCheck}
-                    type="number"
                     placeholder="123"
+                    required
                     className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                   ></input>
                 </div>
               </div>
             </div>
           )}
-        </form>
-        <Link href="/shipping">
-          <button className="mt-8 mb-36 py-2 px-4 rounded-full bg-theme-red text-white">
+          <button
+            type="submit"
+            className="mt-8 mb-36 py-2 px-4 w-20 rounded-full bg-theme-red text-white"
+          >
             Buy
           </button>
-        </Link>
+        </form>
       </div>
 
       <div className="sticky">
