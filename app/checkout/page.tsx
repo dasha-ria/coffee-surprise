@@ -5,17 +5,17 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Checkout() {
-  const [pickUpShown, setPickUpShown] = useState(false);
   const [subscriptionChoice, setSubscriptionChoice] = useState("null");
   const [creditInputValue, setCreditInputValue] = useState("");
   const [expiryInputValue, setExpiryInputValue] = useState("");
+  const [creditShown, setCreditShown] = useState(false);
 
-  const havePickUp = () => {
-    setPickUpShown(true);
+  const showCreditForm = () => {
+    setCreditShown(true);
   };
 
-  const haveDelivered = () => {
-    setPickUpShown(false);
+  const hideCreditForm = () => {
+    setCreditShown(false);
   };
 
   const maxLengthCheck = (e) => {
@@ -207,9 +207,9 @@ export default function Checkout() {
             className="flex gap-4 mt-4"
           >
             <RadioGroup.Item
-              onClick={haveDelivered}
-              value="delivery"
-              id="delivery"
+              onClick={hideCreditForm}
+              value="applepay"
+              id="applepay"
               className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
             >
               <Image
@@ -221,9 +221,9 @@ export default function Checkout() {
               ></Image>
             </RadioGroup.Item>
             <RadioGroup.Item
-              onClick={havePickUp}
-              value="pickup"
-              id="pickup"
+              onClick={showCreditForm}
+              value="creditcard"
+              id="creditcard"
               className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
             >
               <Image
@@ -233,72 +233,74 @@ export default function Checkout() {
                 width="10"
                 height="10"
               ></Image>
-              <label htmlFor="pickup" className="font-semibold text-lg">
+              <label htmlFor="creditcard" className="font-semibold text-lg">
                 Credit Card
               </label>
             </RadioGroup.Item>
           </RadioGroup.Root>
-          <div className="mt-2 flex flex-col gap-2">
-            <div className="flex flex-col gap-1 w-80">
-              <label htmlFor="cardname" className="text-sm">
-                Name on card
-              </label>
-              <input
-                id="cardname"
-                type="text"
-                placeholder="John Doe"
-                className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-1 w-80">
-              <label htmlFor="cardnumber" className="text-sm">
-                Credit card number
-              </label>
-              <input
-                type="text"
-                maxLength="19"
-                onInput={maxLengthCheck}
-                onChange={creditCardSpace}
-                value={creditInputValue}
-                id="cardnumber"
-                placeholder="1234 5678 9012 3456"
-                className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-              ></input>
-            </div>
-            <div className="flex w-80 justify-between">
-              <div className="flex flex-col w-36">
-                <label htmlFor="expiry" className="text-sm">
-                  Expiry date
+          {creditShown && (
+            <div className="mt-2 flex flex-col gap-2">
+              <div className="flex flex-col gap-1 w-80">
+                <label htmlFor="cardname" className="text-sm">
+                  Name on card
                 </label>
                 <input
-                  id="expiry"
-                  maxLength="5"
-                  onInput={maxLengthCheck}
-                  onChange={expiryDateSeparator}
+                  id="cardname"
                   type="text"
-                  value={expiryInputValue}
-                  placeholder="01/19"
+                  placeholder="John Doe"
                   className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                 ></input>
               </div>
-              <div className="flex flex-col w-36">
-                <label htmlFor="security" className="text-sm">
-                  Security code
+              <div className="flex flex-col gap-1 w-80">
+                <label htmlFor="cardnumber" className="text-sm">
+                  Credit card number
                 </label>
                 <input
-                  id="security"
-                  maxLength="3"
+                  type="text"
+                  maxLength="19"
                   onInput={maxLengthCheck}
-                  type="number"
-                  placeholder="123"
+                  onChange={creditCardSpace}
+                  value={creditInputValue}
+                  id="cardnumber"
+                  placeholder="1234 5678 9012 3456"
                   className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                 ></input>
               </div>
+              <div className="flex w-80 justify-between">
+                <div className="flex flex-col w-36">
+                  <label htmlFor="expiry" className="text-sm">
+                    Expiry date
+                  </label>
+                  <input
+                    id="expiry"
+                    maxLength="5"
+                    onInput={maxLengthCheck}
+                    onChange={expiryDateSeparator}
+                    type="text"
+                    value={expiryInputValue}
+                    placeholder="01/19"
+                    className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                  ></input>
+                </div>
+                <div className="flex flex-col w-36">
+                  <label htmlFor="security" className="text-sm">
+                    Security code
+                  </label>
+                  <input
+                    id="security"
+                    maxLength="3"
+                    onInput={maxLengthCheck}
+                    type="number"
+                    placeholder="123"
+                    className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                  ></input>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </form>
         <Link href="/shipping">
-          <button className="mt-8 mb-8 py-2 px-4 rounded-full bg-theme-red text-white">
+          <button className="mt-8 mb-36 py-2 px-4 rounded-full bg-theme-red text-white">
             Buy
           </button>
         </Link>
