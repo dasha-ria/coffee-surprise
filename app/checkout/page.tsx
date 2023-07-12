@@ -56,7 +56,7 @@ export default function Checkout() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push("/shipping");
+    router.push("/confirmation");
   };
 
   useEffect(() => {
