@@ -17,128 +17,15 @@ import {
   FormatCVC,
 } from "../components/CardFormat";
 
-// function clearNumber(value = "") {
-//   return value.replace(/\D+/g, "");
-// }
-
-// function formatCreditCardNumber(value) {
-//   if (!value) {
-//     return value;
-//   }
-
-//   const issuer = Payment.fns.cardType(value);
-//   const clearValue = clearNumber(value);
-//   let nextValue;
-
-//   switch (issuer) {
-//     case "amex":
-//       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
-//         4,
-//         10
-//       )} ${clearValue.slice(10, 15)}`;
-//       break;
-//     case "dinersclub":
-//       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
-//         4,
-//         10
-//       )} ${clearValue.slice(10, 14)}`;
-//       break;
-//     default:
-//       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
-//         4,
-//         8
-//       )} ${clearValue.slice(8, 12)} ${clearValue.slice(12, 19)}`;
-//       break;
-//   }
-
-//   return nextValue.trim();
-// }
-
-// export function formatExpirationDate(value) {
-//   const clearValue = clearNumber(value);
-
-//   if (clearValue.length >= 3) {
-//     return `${clearValue.slice(0, 2)}/${clearValue.slice(2, 4)}`;
-//   }
-
-//   return clearValue;
-// }
-
-// export function formatCVC(value, prevValue, allValues = {}) {
-//   const clearValue = clearNumber(value);
-//   let maxLength = 4;
-
-//   if (allValues.number) {
-//     const issuer = Payment.fns.cardType(allValues.number);
-//     maxLength = issuer === "amex" ? 4 : 3;
-//   }
-
-//   return clearValue.slice(0, maxLength);
-// }
-
 export default function Checkout() {
   const router = useRouter();
   const [subscriptionChoice, setSubscriptionChoice] = useState("null");
-  const [creditInputValue, setCreditInputValue] = useState("");
-  const [expiryInputValue, setExpiryInputValue] = useState("");
-  const [creditShown, setCreditShown] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState(null);
-  const [showPaymentError, setShowPaymentError] = useState(false);
-
-  const showCreditForm = () => {
-    setCreditShown(true);
-  };
-
-  const hideCreditForm = () => {
-    setCreditShown(false);
-  };
-
-  const maxLengthCheck = (e) => {
-    if (e.target.value.length > e.target.maxLength) {
-      e.target.value = e.target.value.slice(0, e.target.maxLength);
-    }
-  };
-
-  const creditCardSpace = (e) => {
-    const val = e.target.value.replace(/[^\d]/g, ""); // replace non digit characters
-    let formatted = "";
-
-    for (let i = 0; i < val.length; i++) {
-      if (i > 0 && i % 4 === 0) {
-        formatted += " ";
-      }
-      formatted += val[i];
-    }
-
-    setCreditInputValue(formatted);
-  };
-
-  const expiryDateSeparator = (e) => {
-    const val = e.target.value.replace(/[^\d]/g, ""); // replace non digit characters
-    let formatted = "";
-
-    for (let i = 0; i < val.length; i++) {
-      if (i > 0 && i % 2 === 0) {
-        formatted += "/";
-      }
-      formatted += val[i];
-    }
-
-    setExpiryInputValue(formatted);
-  };
 
   const onSubmit = (values, form) => {
-    // if (!paymentMethod) {
-    //   setShowPaymentError(true);
-    //   return;
-    // }
-
     console.log(values);
     console.log(form);
-    // router.push("/confirmation");
+    router.push("/confirmation");
   };
-
-  //const onSubmit = (data, err) => console.log(err);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -152,20 +39,6 @@ export default function Checkout() {
   }, []);
 
   const { subscriptionType, bagsPerMonth } = subscriptionChoice;
-
-  const NumberOnlyInput = forwardRef<any>((props, ref) => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const { key } = e;
-      if (!/[0-9]/.test(key)) {
-        e.preventDefault();
-      }
-    };
-
-    return (
-      <input ref={ref} type="text" onKeyDown={handleKeyDown} {...props}></input>
-    );
-  });
-  NumberOnlyInput.displayName = "NumberOnlyInput";
 
   const required = (value) => (value ? undefined : "Required");
   const composeValidators =
@@ -288,51 +161,6 @@ export default function Checkout() {
                 ></Image>
                 <p className="font-semibold text-lg">Credit card</p>
               </div>
-
-              {/* <RadioGroup.Root
-                aria-label="View density"
-                aria-checked
-                className="flex gap-4 mt-4"
-                onValueChange={() => {
-                  setPaymentMethod();
-                  setShowPaymentError(false);
-                }}
-                required
-              >
-                <RadioGroup.Item
-                  aria-checked
-                  onClick={hideCreditForm}
-                  value="applepay"
-                  id="applepay"
-                  className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-                >
-                  <Image
-                    className="w-20 h-auto"
-                    src="/apple-pay.svg"
-                    alt="package"
-                    width="10"
-                    height="10"
-                  ></Image>
-                </RadioGroup.Item>
-                <RadioGroup.Item
-                  aria-checked
-                  onClick={showCreditForm}
-                  value="creditcard"
-                  id="creditcard"
-                  className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-                >
-                  <Image
-                    className="w-8 h-auto"
-                    src="/credit-card.svg"
-                    alt="package"
-                    width="10"
-                    height="10"
-                  ></Image>
-                  <label htmlFor="creditcard" className="font-semibold text-lg">
-                    Credit Card
-                  </label>
-                </RadioGroup.Item>
-              </RadioGroup.Root> */}
 
               <div className="mt-2 flex flex-col gap-2">
                 <Field name="credit-name" validate={required}>
