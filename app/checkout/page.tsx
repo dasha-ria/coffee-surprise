@@ -11,6 +11,70 @@ import {
   useEffect,
   useState,
 } from "react";
+import {
+  FormatCreditCardNumber,
+  FormatExpirationDate,
+  FormatCVC,
+} from "../components/CardFormat";
+
+// function clearNumber(value = "") {
+//   return value.replace(/\D+/g, "");
+// }
+
+// function formatCreditCardNumber(value) {
+//   if (!value) {
+//     return value;
+//   }
+
+//   const issuer = Payment.fns.cardType(value);
+//   const clearValue = clearNumber(value);
+//   let nextValue;
+
+//   switch (issuer) {
+//     case "amex":
+//       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
+//         4,
+//         10
+//       )} ${clearValue.slice(10, 15)}`;
+//       break;
+//     case "dinersclub":
+//       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
+//         4,
+//         10
+//       )} ${clearValue.slice(10, 14)}`;
+//       break;
+//     default:
+//       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
+//         4,
+//         8
+//       )} ${clearValue.slice(8, 12)} ${clearValue.slice(12, 19)}`;
+//       break;
+//   }
+
+//   return nextValue.trim();
+// }
+
+// export function formatExpirationDate(value) {
+//   const clearValue = clearNumber(value);
+
+//   if (clearValue.length >= 3) {
+//     return `${clearValue.slice(0, 2)}/${clearValue.slice(2, 4)}`;
+//   }
+
+//   return clearValue;
+// }
+
+// export function formatCVC(value, prevValue, allValues = {}) {
+//   const clearValue = clearNumber(value);
+//   let maxLength = 4;
+
+//   if (allValues.number) {
+//     const issuer = Payment.fns.cardType(allValues.number);
+//     maxLength = issuer === "amex" ? 4 : 3;
+//   }
+
+//   return clearValue.slice(0, maxLength);
+// }
 
 export default function Checkout() {
   const router = useRouter();
@@ -214,66 +278,17 @@ export default function Checkout() {
               </Field>
 
               <h3 className="font-semibold text-2xl mt-8">Payment</h3>
-              <RadioGroup.Root
-                aria-label="View density"
-                aria-checked
-                className="flex gap-4 mt-4"
-              >
-                <Field
-                  type="radio"
-                  name="payment"
-                  value="applepay"
-                  validate={required}
-                >
-                  {({ input }) => (
-                    <RadioGroup.Item
-                      aria-checked
-                      onClick={hideCreditForm}
-                      id="applepay"
-                      value={input.value}
-                      className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-                    >
-                      <Image
-                        className="w-20 h-auto"
-                        src="/apple-pay.svg"
-                        alt="package"
-                        width="10"
-                        height="10"
-                      ></Image>
-                    </RadioGroup.Item>
-                  )}
-                </Field>
-                <Field
-                  type="radio"
-                  name="payment"
-                  value="creditcard"
-                  validate={required}
-                >
-                  {({ input }) => (
-                    <RadioGroup.Item
-                      aria-checked
-                      onClick={showCreditForm}
-                      value="creditcard"
-                      id="creditcard"
-                      className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-                    >
-                      <Image
-                        className="w-8 h-auto"
-                        src="/credit-card.svg"
-                        alt="package"
-                        width="10"
-                        height="10"
-                      ></Image>
-                      <label
-                        htmlFor="creditcard"
-                        className="font-semibold text-lg"
-                      >
-                        Credit Card
-                      </label>
-                    </RadioGroup.Item>
-                  )}
-                </Field>
-              </RadioGroup.Root>
+              <div className="flex gap-2 items-center">
+                <Image
+                  src="/credit-card.svg"
+                  alt="credit card"
+                  width="10"
+                  height="10"
+                  className="w-8 h-auto"
+                ></Image>
+                <p className="font-semibold text-lg">Credit card</p>
+              </div>
+
               {/* <RadioGroup.Root
                 aria-label="View density"
                 aria-checked
@@ -318,68 +333,98 @@ export default function Checkout() {
                   </label>
                 </RadioGroup.Item>
               </RadioGroup.Root> */}
-              {showPaymentError && <p>Please select a payment method.</p>}
-              {creditShown && (
-                <div className="mt-2 flex flex-col gap-2">
-                  <div className="flex flex-col gap-1 w-80">
-                    <label htmlFor="cardname" className="text-sm">
-                      Name on card
-                    </label>
-                    <input
-                      id="cardname"
-                      type="text"
-                      placeholder="John Doe"
-                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-                    ></input>
-                  </div>
-                  <div className="flex flex-col gap-1 w-80">
-                    <label htmlFor="cardnumber" className="text-sm">
-                      Credit card number
-                    </label>
-                    <input
-                      maxLength="19"
-                      onInput={maxLengthCheck}
-                      onChange={creditCardSpace}
-                      value={creditInputValue}
-                      required
-                      id="cardnumber"
-                      placeholder="1234 5678 9012 3456"
-                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-                    ></input>
-                  </div>
-                  <div className="flex w-80 justify-between">
-                    <div className="flex flex-col w-36">
-                      <label htmlFor="expiry" className="text-sm">
-                        Expiry date
+
+              <div className="mt-2 flex flex-col gap-2">
+                <Field name="credit-name" validate={required}>
+                  {({ input, meta }) => (
+                    <div className="flex flex-col gap-1 w-80">
+                      <label htmlFor="cardname" className="text-sm">
+                        Name on card
                       </label>
                       <input
-                        id="expiry"
-                        maxLength="5"
-                        onInput={maxLengthCheck}
-                        onChange={expiryDateSeparator}
-                        value={expiryInputValue}
-                        placeholder="01/19"
-                        required
+                        type="text"
+                        {...input}
+                        placeholder="John Doe"
                         className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                       ></input>
+                      {meta.touched && meta.error && <span>{meta.error}</span>}
                     </div>
-                    <div className="flex flex-col w-36">
-                      <label htmlFor="security" className="text-sm">
-                        Security code
+                  )}
+                </Field>
+                <Field
+                  name="credit-number"
+                  validate={required}
+                  format={FormatCreditCardNumber}
+                  pattern="[\d| ]{16,22}"
+                >
+                  {({ input, meta }) => (
+                    <div className="flex flex-col gap-1 w-80">
+                      <label htmlFor="cardnumber" className="text-sm">
+                        Credit card number
                       </label>
                       <input
-                        type="number"
-                        id="security"
-                        maxLength="3"
-                        onInput={maxLengthCheck}
-                        placeholder="123"
-                        required
+                        type="text"
+                        {...input}
+                        placeholder="1234 5678 9012 3456"
                         className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                       ></input>
+                      {meta.touched && meta.error && <span>{meta.error}</span>}
                     </div>
-                  </div>
+                  )}
+                </Field>
+
+                <div className="flex w-80 justify-between">
+                  <Field
+                    name="expiry"
+                    validate={required}
+                    format={FormatExpirationDate}
+                    pattern="\d{3,4}"
+                  >
+                    {({ input, meta }) => (
+                      <div className="flex flex-col w-36">
+                        <label htmlFor="expiry" className="text-sm">
+                          Expiration date
+                        </label>
+                        <input
+                          type="text"
+                          {...input}
+                          placeholder="01/19"
+                          className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                        ></input>
+                        {meta.touched && meta.error && (
+                          <span>{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+
+                  <Field
+                    name="security"
+                    validate={required}
+                    format={FormatCVC}
+                    pattern="\d{3,4}"
+                  >
+                    {({ input, meta }) => (
+                      <div className="flex flex-col w-36">
+                        <label htmlFor="security" className="text-sm">
+                          Security code
+                        </label>
+                        <input
+                          type="text"
+                          {...input}
+                          placeholder="123"
+                          required
+                          className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                        ></input>
+                        {meta.touched && meta.error && (
+                          <span>{meta.error}</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
                 </div>
-              )}
+              </div>
+
               <button
                 type="submit"
                 className="disabled:bg-theme-red/20 mt-8 mb-36 py-2 px-4 w-20 rounded-full bg-theme-red text-white"
