@@ -42,6 +42,12 @@ export default function Checkout() {
         (error, validator) => error || validator(value),
         undefined
       );
+  const validateEmail = (value) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+    return emailRegex.test(value) ? undefined : "Invalid email address";
+  };
+  //regex that starts with one or more character, then has @, one or more character, followed by a dot, and ends with two or more characters
 
   return (
     <div className="pt-32 pl-10 flex gap-16">
@@ -63,11 +69,16 @@ export default function Checkout() {
                       placeholder="John"
                       className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                     ></input>
-                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                    {meta.touched && meta.error && (
+                      <span className="text-sm text-red-600">{meta.error}</span>
+                    )}
                   </div>
                 )}
               </Field>
-              <Field name="email" validate={required}>
+              <Field
+                name="email"
+                validate={composeValidators(required, validateEmail)}
+              >
                 {({ input, meta }) => (
                   <div className="flex flex-col gap-1 w-80">
                     <label htmlFor="email" className="text-sm">
@@ -79,7 +90,9 @@ export default function Checkout() {
                       placeholder="johndoe@gmail.com"
                       className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                     ></input>
-                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                    {meta.touched && meta.error && (
+                      <span className="text-sm text-red-600">{meta.error}</span>
+                    )}
                   </div>
                 )}
               </Field>
@@ -108,7 +121,9 @@ export default function Checkout() {
                       placeholder="123 Main St"
                       className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                     ></input>
-                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                    {meta.touched && meta.error && (
+                      <span className="text-sm text-red-600">{meta.error}</span>
+                    )}
                   </div>
                 )}
               </Field>
@@ -123,7 +138,9 @@ export default function Checkout() {
                       placeholder="12345"
                       className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                     ></input>
-                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                    {meta.touched && meta.error && (
+                      <span className="text-sm text-red-600">{meta.error}</span>
+                    )}
                   </div>
                 )}
               </Field>
@@ -139,7 +156,9 @@ export default function Checkout() {
                       placeholder="Fresno"
                       className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                     ></input>
-                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                    {meta.touched && meta.error && (
+                      <span className="text-sm text-red-600">{meta.error}</span>
+                    )}
                   </div>
                 )}
               </Field>
@@ -169,7 +188,11 @@ export default function Checkout() {
                         placeholder="John Doe"
                         className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                       ></input>
-                      {meta.touched && meta.error && <span>{meta.error}</span>}
+                      {meta.touched && meta.error && (
+                        <span className="text-sm text-red-600">
+                          {meta.error}
+                        </span>
+                      )}
                     </div>
                   )}
                 </Field>
@@ -190,7 +213,11 @@ export default function Checkout() {
                         placeholder="1234 5678 9012 3456"
                         className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                       ></input>
-                      {meta.touched && meta.error && <span>{meta.error}</span>}
+                      {meta.touched && meta.error && (
+                        <span className="text-sm text-red-600">
+                          {meta.error}
+                        </span>
+                      )}
                     </div>
                   )}
                 </Field>
@@ -214,7 +241,9 @@ export default function Checkout() {
                           className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                         ></input>
                         {meta.touched && meta.error && (
-                          <span>{meta.error}</span>
+                          <span className="text-sm text-red-600">
+                            {meta.error}
+                          </span>
                         )}
                       </div>
                     )}
@@ -239,7 +268,9 @@ export default function Checkout() {
                           className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
                         ></input>
                         {meta.touched && meta.error && (
-                          <span>{meta.error}</span>
+                          <span className="text-sm text-red-600">
+                            {meta.error}
+                          </span>
                         )}
                       </div>
                     )}
