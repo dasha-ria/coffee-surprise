@@ -3,7 +3,14 @@ import * as RadioGroup from "@radix-ui/react-radio-group";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Form, Field } from "react-final-form";
+import {
+  forwardRef,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from "react";
 
 export default function Checkout() {
   const router = useRouter();
@@ -11,6 +18,8 @@ export default function Checkout() {
   const [creditInputValue, setCreditInputValue] = useState("");
   const [expiryInputValue, setExpiryInputValue] = useState("");
   const [creditShown, setCreditShown] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [showPaymentError, setShowPaymentError] = useState(false);
 
   const showCreditForm = () => {
     setCreditShown(true);
@@ -54,10 +63,18 @@ export default function Checkout() {
     setExpiryInputValue(formatted);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    router.push("/confirmation");
+  const onSubmit = (values, form) => {
+    // if (!paymentMethod) {
+    //   setShowPaymentError(true);
+    //   return;
+    // }
+
+    console.log(values);
+    console.log(form);
+    // router.push("/confirmation");
   };
+
+  //const onSubmit = (data, err) => console.log(err);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -72,267 +89,307 @@ export default function Checkout() {
 
   const { subscriptionType, bagsPerMonth } = subscriptionChoice;
 
-  function NumberOnlyInput(props) {
-    const handleKeyDown = (e) => {
+  const NumberOnlyInput = forwardRef<any>((props, ref) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       const { key } = e;
       if (!/[0-9]/.test(key)) {
         e.preventDefault();
       }
     };
 
-    return <input type="text" onKeyDown={handleKeyDown} {...props}></input>;
-  }
+    return (
+      <input ref={ref} type="text" onKeyDown={handleKeyDown} {...props}></input>
+    );
+  });
+  NumberOnlyInput.displayName = "NumberOnlyInput";
+
+  const required = (value) => (value ? undefined : "Required");
+  const composeValidators =
+    (...validators) =>
+    (value) =>
+      validators.reduce(
+        (error, validator) => error || validator(value),
+        undefined
+      );
 
   return (
     <div className="pt-32 pl-10 flex gap-16">
-      {/* <h2 className="text-2xl font-bold">
-        How would you like to get your order?
-      </h2>
-
-      <form>
-        <RadioGroup.Root
-          defaultValue="none"
-          aria-label="View density"
-          className="flex gap-4 mt-4"
-        >
-          <RadioGroup.Item
-            onClick={haveDelivered}
-            value="delivery"
-            id="delivery"
-            className="flex justify-center items-center gap-2 py-6 w-64 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-          >
-            <Image
-              className="w-8 h-auto"
-              src="/package.svg"
-              alt="package"
-              width="10"
-              height="10"
-            ></Image>
-            <label htmlFor="delivery" className="font-semibold text-lg">
-              I'd like it delivered
-            </label>
-          </RadioGroup.Item>
-          <RadioGroup.Item
-            onClick={havePickUp}
-            value="pickup"
-            id="pickup"
-            className="flex justify-center items-center gap-2 py-6 w-64 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-          >
-            <Image
-              className="w-8 h-auto"
-              src="/bag.svg"
-              alt="package"
-              width="10"
-              height="10"
-            ></Image>
-            <label htmlFor="pickup" className="font-semibold text-lg">
-              I'll pick it up
-            </label>
-          </RadioGroup.Item>
-        </RadioGroup.Root>
-      </form>
-
-      <div className={`mt-4 ${!pickUpShown ? "invisible" : ""}`}>
-        <p className="mt-4 font-semibold text-lg">Pick-up location:</p>
-        <p>
-          5000 Wilshire Blvd <br></br>Los Angeles, CA
-        </p>
-      </div> */}
       <div>
         <h3 className="font-semibold text-2xl">Shipping</h3>
-        <form className="mt-2 flex flex-col gap-3" onSubmit={handleSubmit}>
-          <div className="flex flex-col w-80">
-            <label htmlFor="firstname" className="text-sm">
-              First name
-            </label>
-            <input
-              type="text"
-              placeholder="John"
-              required
-              className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></input>
-          </div>
-          <div className="flex flex-col gap-1 w-80">
-            <label htmlFor="firstname" className="text-sm">
-              Last name
-            </label>
-            <input
-              type="text"
-              placeholder="Doe"
-              required
-              className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></input>
-          </div>
-          <div className="flex flex-col gap-1 w-80">
-            <label htmlFor="firstname" className="text-sm">
-              Email address
-            </label>
-            <input
-              type="text"
-              placeholder="johndoe@gmail.com"
-              required
-              className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></input>
-          </div>
-          <div className="flex flex-col gap-1 w-80">
-            <label htmlFor="firstname" className="text-sm">
-              Phone number
-            </label>
-            <NumberOnlyInput
-              maxLength="10"
-              minLength="10"
-              onInput={maxLengthCheck}
-              placeholder="1234567890"
-              required
-              className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></NumberOnlyInput>
-          </div>
-          <div className="flex flex-col gap-1 w-80">
-            <label htmlFor="firstname" className="text-sm">
-              Address
-            </label>
-            <input
-              type="text"
-              placeholder="123 Main St"
-              required
-              className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></input>
-          </div>
-          <div className="flex flex-col gap-1 w-80">
-            <label htmlFor="firstname" className="text-sm">
-              Postcode
-            </label>
-            <NumberOnlyInput
-              placeholder="12345"
-              maxLength="5"
-              minLength="5"
-              onInput={maxLengthCheck}
-              required
-              className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></NumberOnlyInput>
-          </div>
-          <div className="flex flex-col gap-1 w-80">
-            <label htmlFor="firstname" className="text-sm">
-              City
-            </label>
-            <input
-              type="text"
-              placeholder="Fresno"
-              required
-              className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-            ></input>
-          </div>
+        <Form
+          onSubmit={onSubmit}
+          render={({ handleSubmit, hasValidationErrors }) => (
+            <form className="mt-2 flex flex-col gap-3" onSubmit={handleSubmit}>
+              <Field name="name" validate={required}>
+                {({ input, meta }) => (
+                  <div className="flex flex-col w-80">
+                    <label htmlFor="name" className="text-sm">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      {...input}
+                      placeholder="John"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="email" validate={required}>
+                {({ input, meta }) => (
+                  <div className="flex flex-col gap-1 w-80">
+                    <label htmlFor="email" className="text-sm">
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      {...input}
+                      placeholder="johndoe@gmail.com"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="phone">
+                {({ input, meta }) => (
+                  <div className="flex flex-col gap-1 w-80">
+                    <label htmlFor="phone" className="text-sm">
+                      Phone number
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="1234567890"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                  </div>
+                )}
+              </Field>
+              <Field name="address" validate={required}>
+                {({ input, meta }) => (
+                  <div className="flex flex-col gap-1 w-80">
+                    <label htmlFor="address" className="text-sm">
+                      Address
+                    </label>
+                    <input
+                      {...input}
+                      placeholder="123 Main St"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="postcode" validate={required} type="number">
+                {({ input, meta }) => (
+                  <div className="flex flex-col gap-1 w-80">
+                    <label htmlFor="postcode" className="text-sm">
+                      Postcode
+                    </label>
+                    <input
+                      {...input}
+                      placeholder="12345"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="city" validate={required}>
+                {({ input, meta }) => (
+                  <div className="flex flex-col gap-1 w-80">
+                    <label htmlFor="city" className="text-sm">
+                      City
+                    </label>
+                    <input
+                      type="text"
+                      {...input}
+                      placeholder="Fresno"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
 
-          <h3 className="font-semibold text-2xl mt-8">Payment</h3>
-
-          <RadioGroup.Root
-            aria-label="View density"
-            aria-checked
-            className="flex gap-4 mt-4"
-            required
-          >
-            <RadioGroup.Item
-              aria-checked
-              onClick={hideCreditForm}
-              value="applepay"
-              id="applepay"
-              className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-            >
-              <Image
-                className="w-20 h-auto"
-                src="/apple-pay.svg"
-                alt="package"
-                width="10"
-                height="10"
-              ></Image>
-            </RadioGroup.Item>
-            <RadioGroup.Item
-              aria-checked
-              onClick={showCreditForm}
-              value="creditcard"
-              id="creditcard"
-              className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
-            >
-              <Image
-                className="w-8 h-auto"
-                src="/credit-card.svg"
-                alt="package"
-                width="10"
-                height="10"
-              ></Image>
-              <label htmlFor="creditcard" className="font-semibold text-lg">
-                Credit Card
-              </label>
-            </RadioGroup.Item>
-          </RadioGroup.Root>
-          {creditShown && (
-            <div className="mt-2 flex flex-col gap-2">
-              <div className="flex flex-col gap-1 w-80">
-                <label htmlFor="cardname" className="text-sm">
-                  Name on card
-                </label>
-                <input
-                  id="cardname"
-                  type="text"
-                  placeholder="John Doe"
-                  className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-                ></input>
-              </div>
-              <div className="flex flex-col gap-1 w-80">
-                <label htmlFor="cardnumber" className="text-sm">
-                  Credit card number
-                </label>
-                <input
-                  maxLength="19"
-                  onInput={maxLengthCheck}
-                  onChange={creditCardSpace}
-                  value={creditInputValue}
-                  required
-                  id="cardnumber"
-                  placeholder="1234 5678 9012 3456"
-                  className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-                ></input>
-              </div>
-              <div className="flex w-80 justify-between">
-                <div className="flex flex-col w-36">
-                  <label htmlFor="expiry" className="text-sm">
-                    Expiry date
+              <h3 className="font-semibold text-2xl mt-8">Payment</h3>
+              <RadioGroup.Root
+                aria-label="View density"
+                aria-checked
+                className="flex gap-4 mt-4"
+              >
+                <Field
+                  type="radio"
+                  name="payment"
+                  value="applepay"
+                  validate={required}
+                >
+                  {({ input }) => (
+                    <RadioGroup.Item
+                      aria-checked
+                      onClick={hideCreditForm}
+                      id="applepay"
+                      value={input.value}
+                      className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
+                    >
+                      <Image
+                        className="w-20 h-auto"
+                        src="/apple-pay.svg"
+                        alt="package"
+                        width="10"
+                        height="10"
+                      ></Image>
+                    </RadioGroup.Item>
+                  )}
+                </Field>
+                <Field
+                  type="radio"
+                  name="payment"
+                  value="creditcard"
+                  validate={required}
+                >
+                  {({ input }) => (
+                    <RadioGroup.Item
+                      aria-checked
+                      onClick={showCreditForm}
+                      value="creditcard"
+                      id="creditcard"
+                      className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
+                    >
+                      <Image
+                        className="w-8 h-auto"
+                        src="/credit-card.svg"
+                        alt="package"
+                        width="10"
+                        height="10"
+                      ></Image>
+                      <label
+                        htmlFor="creditcard"
+                        className="font-semibold text-lg"
+                      >
+                        Credit Card
+                      </label>
+                    </RadioGroup.Item>
+                  )}
+                </Field>
+              </RadioGroup.Root>
+              {/* <RadioGroup.Root
+                aria-label="View density"
+                aria-checked
+                className="flex gap-4 mt-4"
+                onValueChange={() => {
+                  setPaymentMethod();
+                  setShowPaymentError(false);
+                }}
+                required
+              >
+                <RadioGroup.Item
+                  aria-checked
+                  onClick={hideCreditForm}
+                  value="applepay"
+                  id="applepay"
+                  className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
+                >
+                  <Image
+                    className="w-20 h-auto"
+                    src="/apple-pay.svg"
+                    alt="package"
+                    width="10"
+                    height="10"
+                  ></Image>
+                </RadioGroup.Item>
+                <RadioGroup.Item
+                  aria-checked
+                  onClick={showCreditForm}
+                  value="creditcard"
+                  id="creditcard"
+                  className="flex justify-center items-center gap-2 py-1 w-44 border-2 border-gray-400 rounded-md data-[state=checked]:border-blue-600"
+                >
+                  <Image
+                    className="w-8 h-auto"
+                    src="/credit-card.svg"
+                    alt="package"
+                    width="10"
+                    height="10"
+                  ></Image>
+                  <label htmlFor="creditcard" className="font-semibold text-lg">
+                    Credit Card
                   </label>
-                  <input
-                    id="expiry"
-                    maxLength="5"
-                    onInput={maxLengthCheck}
-                    onChange={expiryDateSeparator}
-                    value={expiryInputValue}
-                    placeholder="01/19"
-                    required
-                    className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-                  ></input>
+                </RadioGroup.Item>
+              </RadioGroup.Root> */}
+              {showPaymentError && <p>Please select a payment method.</p>}
+              {creditShown && (
+                <div className="mt-2 flex flex-col gap-2">
+                  <div className="flex flex-col gap-1 w-80">
+                    <label htmlFor="cardname" className="text-sm">
+                      Name on card
+                    </label>
+                    <input
+                      id="cardname"
+                      type="text"
+                      placeholder="John Doe"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                  </div>
+                  <div className="flex flex-col gap-1 w-80">
+                    <label htmlFor="cardnumber" className="text-sm">
+                      Credit card number
+                    </label>
+                    <input
+                      maxLength="19"
+                      onInput={maxLengthCheck}
+                      onChange={creditCardSpace}
+                      value={creditInputValue}
+                      required
+                      id="cardnumber"
+                      placeholder="1234 5678 9012 3456"
+                      className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                    ></input>
+                  </div>
+                  <div className="flex w-80 justify-between">
+                    <div className="flex flex-col w-36">
+                      <label htmlFor="expiry" className="text-sm">
+                        Expiry date
+                      </label>
+                      <input
+                        id="expiry"
+                        maxLength="5"
+                        onInput={maxLengthCheck}
+                        onChange={expiryDateSeparator}
+                        value={expiryInputValue}
+                        placeholder="01/19"
+                        required
+                        className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                      ></input>
+                    </div>
+                    <div className="flex flex-col w-36">
+                      <label htmlFor="security" className="text-sm">
+                        Security code
+                      </label>
+                      <input
+                        type="number"
+                        id="security"
+                        maxLength="3"
+                        onInput={maxLengthCheck}
+                        placeholder="123"
+                        required
+                        className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
+                      ></input>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex flex-col w-36">
-                  <label htmlFor="security" className="text-sm">
-                    Security code
-                  </label>
-                  <input
-                    type="number"
-                    id="security"
-                    maxLength="3"
-                    onInput={maxLengthCheck}
-                    placeholder="123"
-                    required
-                    className="border-2 focus:border-blue-600 border-black rounded-md pl-2 p-1"
-                  ></input>
-                </div>
-              </div>
-            </div>
+              )}
+              <button
+                type="submit"
+                className="disabled:bg-theme-red/20 mt-8 mb-36 py-2 px-4 w-20 rounded-full bg-theme-red text-white"
+                disabled={hasValidationErrors}
+              >
+                Buy
+              </button>
+            </form>
           )}
-          <button
-            type="submit"
-            className="mt-8 mb-36 py-2 px-4 w-20 rounded-full bg-theme-red text-white"
-          >
-            Buy
-          </button>
-        </form>
+        ></Form>
       </div>
 
       <div className="sticky">
