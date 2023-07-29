@@ -5,6 +5,12 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const texts = ["BRAZIL", "COLOMBIA", "ETHIOPIA", "COSTA RICA"];
+const description = [
+  "Our Brazilian blends burst with rich, nutty flavors and a slightly sweet profile - an authentic taste of Brazil in every sip.",
+  "Our Colombian blends are celebrated for its bright acidity, smooth body, and caramel hints. It's truly a high-altitude delight!",
+  "Our Ethiopian blends are distinctively fruity and wine-like, with a mellow yet exotic complexity that echoes its rich history.",
+  "The Costa Rican blends stand out with their robust body, crisp acidity, and flavors that hint at citrus and chocolate. It’s a tropical treat that exemplifies the pure essence of Pura Vida!",
+];
 const images = [
   "/brazil.jpg",
   "/colombia.jpg",
@@ -176,6 +182,14 @@ export default function Home() {
             >
               {texts[text]}
             </motion.h2>
+            <div className="mt-80 w-[40rem] h-40 flex justify-center items-center absolute z-40 bg-white/30 backdrop-blur-sm">
+              <motion.p
+                key={description[text]}
+                className="absolute z-30 text-xl w-[35rem] font-bold text-white"
+              >
+                {description[text]}
+              </motion.p>
+            </div>
           </AnimatePresence>
           <AnimatePresence initial={false} custom={direction}>
             <motion.img
