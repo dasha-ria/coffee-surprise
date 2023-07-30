@@ -7,8 +7,7 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/about", label: "ABOUT" },
-  { href: "/the-coffee", label: "THE COFFEE" },
-  { href: "/subscribe", label: "SUBSCRIBE!" },
+  { href: "/subscribe", label: "SUBSCRIBE" },
 ];
 
 export function NavMenu() {
@@ -25,16 +24,6 @@ export function NavMenu() {
         ></Image>
       </Link>
       <ul className="flex gap-8">
-        {/* <Link href="/about">
-          <li>ABOUT</li>
-        </Link>
-        <Link href="/the-coffee">
-          <li>THE COFFEE</li>
-        </Link>
-        <Link href="/subscribe">
-          <li>SUBSCRIBE!</li>
-        </Link> */}
-
         {links.map((link) => (
           <li key={link.href}>
             <Link className="relative" href={link.href}>
