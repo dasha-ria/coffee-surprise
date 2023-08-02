@@ -13,19 +13,19 @@ const links = [
 export function NavMenu() {
   const path = usePathname();
   return (
-    <nav className="flex items-end pt-4 px-8 justify-between w-full fixed z-50 pb-4 bg-white/80 backdrop-blur-2xl">
+    <nav className="flex items-end pt-2 md:pt-4 px-2 md:px-8 justify-between w-full fixed z-50 pb-2 md:pb-4 bg-white/80 backdrop-blur-2xl">
       <Link href="/">
         <Image
           src="/coffeesurprise-logo.svg"
           alt="Coffee Surprise logo"
           width="50"
           height="50"
-          className="w-28 h-auto"
+          className="w-24 md:w-28 h-auto"
         ></Image>
       </Link>
-      <ul className="flex gap-8">
+      <ul className="flex gap-4 md:gap-8">
         {links.map((link) => (
-          <li key={link.href}>
+          <li key={link.href} className="text-sm md:text-md">
             <Link className="relative" href={link.href}>
               {link.href === path && (
                 <motion.span

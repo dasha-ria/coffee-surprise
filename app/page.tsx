@@ -1,5 +1,10 @@
 "use client";
-import { motion, useScroll, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  AnimatePresence,
+  useReducedMotion,
+} from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -22,6 +27,18 @@ export default function Home() {
   const [slideshow, setSlideshow] = useState(0);
   const [text, setText] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.matchMedia("(min-width:768px)").matches);
+    };
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   function nextStep() {
     setDirection(1);
@@ -45,17 +62,28 @@ export default function Home() {
     setText(text - 1);
   }
 
-  const TextAnimate = {
-    offscreen: {
-      y: 20,
-      opacity: 0,
-    },
-    onscreen: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.8, ease: "easeIn" },
-    },
-  };
+  const TextAnimate = isDesktop
+    ? {
+        offscreen: {
+          y: 20,
+          opacity: 0,
+        },
+        onscreen: {
+          y: 0,
+          opacity: 1,
+          transition: { duration: 0.8, ease: "easeIn" },
+        },
+      }
+    : {
+        offscreen: {
+          y: 0,
+          opacity: 1,
+        },
+        onscreen: {
+          y: 0,
+          opacity: 1,
+        },
+      };
 
   const slideshowVariants = {
     initial: (direction) => {
@@ -75,39 +103,39 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-screen snap-y snap-mandatory overflow-scroll relative">
+    <div className="h-screen w-screen md:snap-y md:snap-mandatory md:overflow-scroll relative">
       <section className="h-screen w-screen flex justify-center snap-start">
-        <div className="flex flex-col gap-4 top-64 absolute">
-          <h1 className="font-bold text-5xl text-center">
+        <div className="flex flex-col gap-4 top-28 md:top-64 absolute items-center">
+          <h1 className="font-bold text-2xl md:text-5xl text-center">
             GET A GOOD DOSE OF <br></br>COFFEE SURPRISE!
           </h1>
-          <p className="text-center text-lg">
-            We select good quality coffe for you every month and deliver it{" "}
-            <br></br> to your door.
+          <p className="text-center w-2/3 md:text-lg">
+            We select good quality coffe for you every month and deliver it to
+            your door.
           </p>
         </div>
         <Image
-          className="h-96 w-auto absolute bottom-0"
+          className="md:h-96 md:w-auto absolute bottom-0"
           src="/homepage-coffee.png"
           width="1000"
           height="1000"
           alt="Picture of coffee bag"
         ></Image>
       </section>
-      <section className="h-screen w-screen pt-60 bg-slate-50 snap-start">
+      <section className="h-screen w-screen pt-24 md:pt-60 bg-slate-50 md:snap-start">
         <motion.h2
           initial={"offscreen"}
           whileInView={"onscreen"}
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="text-2xl font-bold text-center mx-12 w-fit"
+          className="text-xl md:text-2xl mx-auto md:mx-12 font-bold text-center w-fit"
         >
           HIGH QUALITY THIRD <br></br>WAVE COFFEE.
         </motion.h2>
         <div className="flex justify-center items-center">
           <Image
-            className="h-96 w-auto"
+            className="h-64 md:h-96 mt-8 md:mt-0 w-auto"
             src="/coffee-homepage-2.png"
             width="1000"
             height="1000"
@@ -115,47 +143,48 @@ export default function Home() {
           ></Image>
         </div>
 
-        <div className="flex gap-8 mt-16 justify-center">
+        <div className="flex gap-x-6 gap-y-0 md:gap-8 mt-2 md:mt-16 justify-center flex-wrap">
           <Image
-            className="w-28 h-auto"
+            className="w-24 md:w-28 h-auto"
             src="/koppi.svg"
             width="40"
             height="40"
             alt="Koppi logo"
           ></Image>
           <Image
-            className="w-20 h-auto"
+            className="w-16 md:w-20 h-auto"
             src="/drop-coffee.svg"
             width="40"
             height="40"
-            alt="Koppi logo"
+            alt="Drop coffee logo"
           ></Image>
           <Image
-            className="w-32 h-auto"
+            className="w-24 md:w-32 h-auto"
             src="/coffee-collective.svg"
             width="40"
             height="40"
-            alt="Koppi logo"
+            alt="Coffee collective logo"
           ></Image>
           <Image
-            className="w-20 h-auto"
+            className="w-20 md:w-20 h-auto"
             src="/the-barn-coffee.svg"
             width="40"
             height="40"
-            alt="Koppi logo"
+            alt="The barn logo"
           ></Image>
           <Image
-            className="w-24 h-auto"
+            className="w-24 md:w-24 h-auto"
             src="/solde.svg"
             width="40"
             height="40"
-            alt="Koppi logo"
+            alt="Solde logo"
           ></Image>
         </div>
       </section>
-      <section className="h-screen w-screen relative snap-start">
+      <section className="h-screen w-screen relative md:snap-start">
         <video
           autoPlay
+          playsInline
           loop
           muted
           className="w-full h-full object-cover z-0 absolute"
@@ -168,24 +197,24 @@ export default function Home() {
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute"
+          className="pt-24 md:pt-60 text-xl md:text-2xl text-white font-bold mx-4 md:mx-10 z-50 absolute"
         >
           FRESH FROM THE FARM.
         </motion.h2>
       </section>
-      <section className="relative h-screen w-screen pt-96 snap-start bg-black">
+      <section className="relative h-screen w-screen pt-28 md:pt-96 md:snap-start bg-black">
         <div className="flex justify-center items-center">
           <AnimatePresence initial={false} custom={direction}>
             <motion.h2
               key={texts[text]}
-              className="absolute z-30 text-6xl font-bold text-white"
+              className="absolute z-30 text-4xl md:text-6xl font-bold text-black md:text-white"
             >
               {texts[text]}
             </motion.h2>
-            <div className="mt-80 w-[40rem] h-40 flex justify-center items-center absolute z-40 bg-white/30 backdrop-blur-sm">
+            <div className="mt-80 w-80 md:w-[40rem] h-40 flex justify-center items-center absolute z-40 bg-white/30 backdrop-blur-sm">
               <motion.p
                 key={description[text]}
-                className="absolute z-30 text-xl w-[35rem] font-bold text-white"
+                className="absolute z-30 text-lg md:text-xl w-72 md:w-[35rem] font-bold text-white"
               >
                 {description[text]}
               </motion.p>
@@ -208,10 +237,10 @@ export default function Home() {
           </AnimatePresence>
         </div>
 
-        <div className="flex gap-8 z-50 absolute w-full justify-between px-20">
+        <div className="flex gap-8 z-50 absolute w-full justify-between px-10 md:px-20">
           <button onClick={previousStep} className="-mt-4">
             <Image
-              className="w-3 h-auto fill-white stroke-white"
+              className="w-3 h-auto md:fill-white md:stroke-white"
               src="/arrow-left.svg"
               alt="Arrow left"
               width="4"
@@ -230,9 +259,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="h-screen w-screen relative snap-start">
+      <section className="h-screen w-screen relative md:snap-start">
         <video
           autoPlay
+          playsInline
           loop
           muted
           className="w-full h-full object-cover z-0 absolute"
@@ -245,19 +275,19 @@ export default function Home() {
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="pt-60 text-2xl text-white font-bold mx-10 z-50 absolute"
+          className="pt-16 text-xl md:pt-60 md:text-2xl text-white font-bold mx-10 z-50 absolute"
         >
           FOR YOU TO HAVE A GREAT <br></br>COFFEE EXPERIENCE.
         </motion.h2>
       </section>
-      <section className="h-screen w-screen snap-start">
+      <section className="h-screen w-screen md:snap-start">
         <motion.h2
           initial={"offscreen"}
           whileInView={"onscreen"}
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="flex justify-center pt-52 pb-12 text-3xl font-bold"
+          className="flex justify-center pl-4 md:pl-0 pt-20 md:pt-52 pb-8 md:pb-12 text-2xl md:text-3xl font-bold"
         >
           Which coffee subscription is right for you?
         </motion.h2>
@@ -268,10 +298,10 @@ export default function Home() {
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="flex justify-center gap-48"
+          className="flex flex-col md:flex-row justify-center gap-12 md:gap-4 md:gap-48"
         >
           <div className="flex flex-col items-center">
-            <h3 className="font-bold text-lg">Try this month's coffee</h3>
+            <h3 className="font-bold md:text-lg">Try this month's coffee</h3>
             <p>$40</p>
             <div className="flex gap-1 pt-4 pb-2">
               <Image
@@ -300,7 +330,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex flex-col items-center">
-            <h3 className="font-bold text-lg">Monthly</h3>
+            <h3 className="font-bold md:text-lg">Monthly</h3>
             <p>From $20/mo</p>
             <div className="flex gap-1 pt-4 pb-2">
               <Image
