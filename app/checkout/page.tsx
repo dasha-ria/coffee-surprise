@@ -13,7 +13,7 @@ import {
 
 export default function Checkout() {
   const router = useRouter();
-  const [subscriptionChoice, setSubscriptionChoice] = useState<any>(null);
+  const [subscriptionChoice, setSubscriptionChoice] = useState<any>({});
 
   const onSubmit = () => {
     router.push("/confirmation");
