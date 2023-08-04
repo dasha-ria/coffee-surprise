@@ -86,7 +86,7 @@ export default function Home() {
       };
 
   const slideshowVariants = {
-    initial: (direction) => {
+    initial: (direction: any) => {
       return { x: direction > 0 ? 300 : -300, opacity: 0.5 };
     },
     animate: {
@@ -97,7 +97,7 @@ export default function Home() {
         opacity: { duration: 0.1 },
       },
     },
-    exit: (direction) => {
+    exit: (direction: any) => {
       return { x: direction > 0 ? -300 : 300, opacity: 0.5 };
     },
   };
@@ -298,7 +298,7 @@ export default function Home() {
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="flex flex-col md:flex-row justify-center gap-12 md:gap-4 md:gap-48"
+          className="flex flex-col md:flex-row justify-center gap-12 md:gap-48"
         >
           <div className="flex flex-col items-center">
             <h3 className="font-bold md:text-lg">Try this month's coffee</h3>

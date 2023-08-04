@@ -39,7 +39,7 @@ export default function Subscribe() {
     setIsShown(false);
   };
 
-  const handleBagsChange = (value) => {
+  const handleBagsChange = (value: any) => {
     setSelectedBags(value);
   };
 

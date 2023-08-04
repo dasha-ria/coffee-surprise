@@ -4,7 +4,7 @@ function clearNumber(value = "") {
   return value.replace(/\D+/g, "");
 }
 
-export function FormatCreditCardNumber(value) {
+export function FormatCreditCardNumber(value: any) {
   if (!value) {
     return value;
   }
@@ -37,7 +37,7 @@ export function FormatCreditCardNumber(value) {
   return nextValue.trim();
 }
 
-export function FormatExpirationDate(value) {
+export function FormatExpirationDate(value: any) {
   const clearValue = clearNumber(value);
 
   if (clearValue.length >= 3) {
@@ -47,7 +47,7 @@ export function FormatExpirationDate(value) {
   return clearValue;
 }
 
-export function FormatCVC(value, prevValue, allValues = {}) {
+export function FormatCVC(value: any, prevValue: any, allValues: any = {}) {
   const clearValue = clearNumber(value);
   let maxLength = 4;
 

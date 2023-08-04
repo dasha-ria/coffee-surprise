@@ -13,11 +13,9 @@ import {
 
 export default function Checkout() {
   const router = useRouter();
-  const [subscriptionChoice, setSubscriptionChoice] = useState("null");
+  const [subscriptionChoice, setSubscriptionChoice] = useState<any>(null);
 
-  const onSubmit = (values, form) => {
-    console.log(values);
-    console.log(form);
+  const onSubmit = () => {
     router.push("/confirmation");
   };
 
@@ -34,15 +32,15 @@ export default function Checkout() {
 
   const { subscriptionType, bagsPerMonth } = subscriptionChoice;
 
-  const required = (value) => (value ? undefined : "Required");
+  const required = (value: any) => (value ? undefined : "Required");
   const composeValidators =
-    (...validators) =>
-    (value) =>
+    (...validators: any) =>
+    (value: any) =>
       validators.reduce(
-        (error, validator) => error || validator(value),
+        (error: any, validator: any) => error || validator(value),
         undefined
       );
-  const validateEmail = (value) => {
+  const validateEmail = (value: any) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
     return emailRegex.test(value) ? undefined : "Invalid email address";
