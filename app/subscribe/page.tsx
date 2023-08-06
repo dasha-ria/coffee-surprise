@@ -57,9 +57,9 @@ export default function Subscribe() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
-      className="pt-52 pl-10"
+      className="pt-28 md:pt-52 pl-4 md:pl-10"
     >
-      <h2 className="text-2xl font-bold">
+      <h2 className="w-80 md:w-full text-2xl font-bold pb-8 md:pb-0">
         Which subscription is right for you?
       </h2>
       <div className="flex items-center gap-12 mt-2">
@@ -68,7 +68,7 @@ export default function Subscribe() {
           alt="coffee bags"
           width="1000"
           height="1000"
-          className="h-80 w-auto"
+          className="h-80 w-auto hidden md:block"
         ></Image>
 
         <form className="flex flex-col">
