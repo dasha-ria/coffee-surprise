@@ -9,9 +9,9 @@ export default function About() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
-      className="pt-44 pl-10 flex gap-20"
+      className="pt-32 md:pt-44 pl-4 md:pl-10 flex flex-col md:flex-row gap-8 pb-10 md:gap-20"
     >
-      <div className="w-[30rem] flex flex-col gap-4">
+      <div className="w-[20rem] md:w-[30rem] flex flex-col gap-4">
         <p>
           In pursuit of exceptional flavors, we scour the world's best
           coffee-growing regions to bring our customers not just a beverage, but

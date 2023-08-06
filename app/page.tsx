@@ -239,22 +239,22 @@ export default function Home() {
 
         <div className="flex gap-8 z-50 absolute w-full justify-between px-10 md:px-20">
           <button onClick={previousStep} className="-mt-4">
-            <Image
-              className="w-3 h-auto md:fill-white md:stroke-white"
-              src="/arrow-left.svg"
-              alt="Arrow left"
-              width="4"
-              height="4"
-            ></Image>
+            <svg
+              className="w-3 h-auto text-black md:text-white fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 11 20"
+            >
+              <path d="m10.21 20-10-10 10-10v20Z" />
+            </svg>
           </button>
           <button onClick={nextStep} className="-mt-4">
-            <Image
-              className="w-3 h-auto text-white stroke-white fill-white"
-              src="/arrow-right.svg"
-              alt="Arrow right"
-              width="4"
-              height="4"
-            ></Image>
+            <svg
+              className="w-3 h-auto text-black md:text-white fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 10 20"
+            >
+              <path d="M0 20V0l10 10L0 20Z" />
+            </svg>
           </button>
         </div>
       </section>
