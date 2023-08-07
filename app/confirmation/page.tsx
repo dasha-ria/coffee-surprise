@@ -1,6 +1,6 @@
 export default function Confirmation() {
   return (
-    <div className="pt-32 pl-8">
+    <div className="pt-32 pl-4 md:pl-8">
       <h2 className="text-xl font-bold mb-4">Thank you for your order!</h2>
       <p>
         We're delighted to tell you that we have received your order #num{" "}
