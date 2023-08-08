@@ -105,7 +105,7 @@ export default function Home() {
   return (
     <div className="h-screen w-screen md:snap-y md:snap-mandatory md:overflow-scroll relative">
       <section className="h-screen w-screen flex justify-center snap-start">
-        <div className="flex flex-col gap-4 top-28 md:top-64 absolute items-center">
+        <div className="flex flex-col gap-4 top-28 md:top-36 absolute items-center">
           <h1 className="font-bold text-2xl md:text-5xl text-center">
             GET A GOOD DOSE OF <br></br>COFFEE SURPRISE!
           </h1>
