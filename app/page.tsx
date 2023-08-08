@@ -122,7 +122,7 @@ export default function Home() {
           alt="Picture of coffee bag"
         ></Image>
       </section>
-      <section className="h-screen w-screen pt-24 md:pt-60 bg-slate-50 md:snap-start">
+      <section className="h-screen w-screen pt-24 md:pt-36 bg-slate-50 md:snap-start">
         <motion.h2
           initial={"offscreen"}
           whileInView={"onscreen"}
@@ -143,7 +143,7 @@ export default function Home() {
           ></Image>
         </div>
 
-        <div className="flex gap-x-6 gap-y-0 md:gap-8 mt-2 md:mt-16 justify-center flex-wrap">
+        <div className="flex gap-x-6 gap-y-0 md:gap-8 mt-2 md:mt-16 lg:mt-8 justify-center flex-wrap">
           <Image
             className="w-24 md:w-28 h-auto"
             src="/koppi.svg"
@@ -197,7 +197,7 @@ export default function Home() {
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="pt-24 md:pt-60 text-xl md:text-2xl text-white font-bold mx-4 md:mx-10 z-50 absolute"
+          className="pt-24 md:pt-36 text-xl md:text-2xl text-white font-bold mx-4 md:mx-10 z-50 absolute"
         >
           FRESH FROM THE FARM.
         </motion.h2>
@@ -275,7 +275,7 @@ export default function Home() {
           viewport={{ once: false, amount: 1 }}
           transition={{ duration: 0.5 }}
           variants={TextAnimate}
-          className="pt-16 text-xl md:pt-60 md:text-2xl text-white font-bold mx-10 z-50 absolute"
+          className="pt-16 text-xl md:pt-36 md:text-2xl text-white font-bold mx-10 z-50 absolute"
         >
           FOR YOU TO HAVE A GREAT <br></br>COFFEE EXPERIENCE.
         </motion.h2>

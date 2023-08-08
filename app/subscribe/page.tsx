@@ -57,21 +57,21 @@ export default function Subscribe() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
-      className="pt-28 md:pt-52 pl-4 md:pl-10"
+      className="pt-28 md:pt-32 pl-4 md:pl-10"
     >
       <h2 className="w-80 md:w-full text-2xl font-bold pb-8 md:pb-0">
         Which subscription is right for you?
       </h2>
-      <div className="flex items-center gap-12 mt-2">
-        <Image
+      <div className="flex items-center md:gap-10 lg:gap-20 mt-2">
+        {/* <Image
           src="/coffee-homepage-2.png"
           alt="coffee bags"
           width="1000"
           height="1000"
           className="h-80 w-auto hidden md:block"
-        ></Image>
+        ></Image> */}
 
-        <form className="flex flex-col">
+        <form className="flex flex-col pt-4">
           <RadioGroup.Root
             className="flex flex-col gap-2.5"
             defaultValue="none"
@@ -205,8 +205,43 @@ export default function Subscribe() {
             </Link>
           )}
         </form>
+        <div className="flex flex-col items-center">
+          <div>
+            <Image
+              src="/coffee-homepage-2.png"
+              alt="coffee bags"
+              width="1000"
+              height="1000"
+              className="md:h-[35vw] lg:h-[40vw] w-auto hidden md:block"
+            ></Image>
+          </div>
+          <div className="hidden md:flex gap-12">
+            <div className="flex gap-1">
+              <Image
+                className="w-6 h-auto"
+                src="/package.svg"
+                alt="package"
+                width="10"
+                height="10"
+              ></Image>
+              <p>Free delivery</p>
+            </div>
+            <div className="flex gap-1">
+              <Image
+                className="w-6 h-auto"
+                src="/shipping.svg"
+                alt="package"
+                width="10"
+                height="10"
+              ></Image>
+              <p>
+                Shipping date: <span>30 July</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="pl-8 hidden md:flex gap-12">
+      {/* <div className="pl-8 hidden md:flex gap-12">
         <div className="flex gap-1">
           <Image
             className="w-6 h-auto"
@@ -229,7 +264,7 @@ export default function Subscribe() {
             Shipping date: <span>30 July</span>
           </p>
         </div>
-      </div>
+      </div> */}
     </motion.div>
   );
 }
