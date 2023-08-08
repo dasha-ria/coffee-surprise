@@ -54,12 +54,12 @@ export default function Checkout() {
           onSubmit={onSubmit}
           render={({ handleSubmit, hasValidationErrors }) => (
             <form className="mt-2" onSubmit={handleSubmit}>
-              <div className="flex-col md:flex-row flex gap-8 md:gap-16">
+              <div className="flex-col lg:flex-row flex gap-8 lg:gap-28">
                 <div className="mt-2 flex flex-col gap-2">
                   <h3 className="font-semibold text-2xl">Shipping</h3>
                   <Field name="name" validate={required}>
                     {({ input, meta }) => (
-                      <div className="flex flex-col gap-1 w-80">
+                      <div className="flex flex-col gap-1 w-80 md:w-96">
                         <label htmlFor="name" className="text-sm">
                           Name
                         </label>
@@ -82,7 +82,7 @@ export default function Checkout() {
                     validate={composeValidators(required, validateEmail)}
                   >
                     {({ input, meta }) => (
-                      <div className="flex flex-col gap-1 w-80">
+                      <div className="flex flex-col gap-1 w-80 md:w-96">
                         <label htmlFor="email" className="text-sm">
                           Email address
                         </label>
@@ -102,7 +102,7 @@ export default function Checkout() {
                   </Field>
                   <Field name="phone">
                     {({ input, meta }) => (
-                      <div className="flex flex-col gap-1  w-80">
+                      <div className="flex flex-col gap-1 w-80 md:w-96">
                         <label htmlFor="phone" className="text-sm">
                           Phone number
                         </label>
@@ -116,7 +116,7 @@ export default function Checkout() {
                   </Field>
                   <Field name="address" validate={required}>
                     {({ input, meta }) => (
-                      <div className="flex flex-col gap-1  w-80">
+                      <div className="flex flex-col gap-1 w-80 md:w-96">
                         <label htmlFor="address" className="text-sm">
                           Address
                         </label>
@@ -135,7 +135,7 @@ export default function Checkout() {
                   </Field>
                   <Field name="postcode" validate={required} type="number">
                     {({ input, meta }) => (
-                      <div className="flex flex-col gap-1  w-80">
+                      <div className="flex flex-col gap-1 w-80 md:w-96">
                         <label htmlFor="postcode" className="text-sm">
                           Postcode
                         </label>
@@ -154,7 +154,7 @@ export default function Checkout() {
                   </Field>
                   <Field name="city" validate={required}>
                     {({ input, meta }) => (
-                      <div className="flex flex-col gap-1 mt-2 w-80">
+                      <div className="flex flex-col gap-1 mt-2 w-80 md:w-96">
                         <label htmlFor="city" className="text-sm">
                           City
                         </label>
@@ -188,7 +188,7 @@ export default function Checkout() {
                   <div className="mt-2 flex flex-col gap-2">
                     <Field name="credit-name" validate={required}>
                       {({ input, meta }) => (
-                        <div className="flex flex-col gap-1 w-80">
+                        <div className="flex flex-col gap-1 w-80 md:w-96">
                           <label htmlFor="cardname" className="text-sm">
                             Name on card
                           </label>
@@ -213,7 +213,7 @@ export default function Checkout() {
                       pattern="[\d| ]{16,22}"
                     >
                       {({ input, meta }) => (
-                        <div className="flex flex-col gap-1 w-80">
+                        <div className="flex flex-col gap-1 w-80 md:w-96">
                           <label htmlFor="cardnumber" className="text-sm">
                             Credit card number
                           </label>
@@ -232,7 +232,7 @@ export default function Checkout() {
                       )}
                     </Field>
 
-                    <div className="flex w-80 justify-between">
+                    <div className="flex w-80 md:w-96 justify-between">
                       <Field
                         name="expiry"
                         validate={required}
@@ -240,7 +240,7 @@ export default function Checkout() {
                         pattern="\d{3,4}"
                       >
                         {({ input, meta }) => (
-                          <div className="flex flex-col w-36">
+                          <div className="flex flex-col w-36 md:w-44">
                             <label htmlFor="expiry" className="text-sm">
                               Expiration date
                             </label>
@@ -266,7 +266,7 @@ export default function Checkout() {
                         pattern="\d{3,4}"
                       >
                         {({ input, meta }) => (
-                          <div className="flex flex-col w-36">
+                          <div className="flex flex-col w-36 md:w-44">
                             <label htmlFor="security" className="text-sm">
                               Security code
                             </label>
@@ -291,7 +291,7 @@ export default function Checkout() {
 
                 <div className="sticky">
                   <h3 className="font-semibold text-2xl ">Order summary</h3>
-                  <div className="mt-2 md:mt-5 border-2 border-black py-4 px-4 rounded-md w-80">
+                  <div className="mt-2 lg:mt-8 border-2 border-black py-4 px-4 rounded-md w-80">
                     {subscriptionType === "one-time" && (
                       <p className="font-medium text-lg">
                         Try this month's coffee!
