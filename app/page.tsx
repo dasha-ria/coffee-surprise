@@ -143,7 +143,7 @@ export default function Home() {
           ></Image>
         </div>
 
-        <div className="flex gap-x-6 gap-y-0 md:gap-8 mt-2 md:mt-16 lg:mt-8 justify-center flex-wrap">
+        <div className="flex gap-x-6 gap-y-0 md:gap-8 mt-2 md:mt-16 lg:mt-8 justify-center items-center flex-wrap">
           <Image
             className="w-24 md:w-28 h-auto"
             src="/koppi.svg"
@@ -211,7 +211,7 @@ export default function Home() {
             >
               {texts[text]}
             </motion.h2>
-            <div className="mt-80 w-80 md:w-[40rem] h-40 flex justify-center items-center absolute z-40 bg-white/30 backdrop-blur-sm">
+            <div className="mt-80 w-80 md:w-[40rem] h-40 flex justify-center items-center absolute z-40 bg-white/20 backdrop-blur-md">
               <motion.p
                 key={description[text]}
                 className="absolute z-30 text-lg md:text-xl w-72 md:w-[35rem] font-bold text-white"
@@ -237,19 +237,25 @@ export default function Home() {
           </AnimatePresence>
         </div>
 
-        <div className="flex gap-8 z-50 absolute w-full justify-between px-10 md:px-20">
-          <button onClick={previousStep} className="-mt-4">
+        <div className="flex gap-8 z-50 absolute w-full px-10 md:px-20 justify-between 2xl:px-80 min-[1800px]:px-[500px]">
+          <button
+            onClick={previousStep}
+            className="-mt-4 lg:mt-36 lg:w-12 lg:h-12 lg:bg-transparent/80 lg:rounded-full lg:flex lg:items-center lg:relative"
+          >
             <svg
-              className="w-3 h-auto text-black md:text-white fill-current"
+              className="w-3 h-auto text-black md:text-white fill-current lg:absolute lg:right-5"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 11 20"
             >
               <path d="m10.21 20-10-10 10-10v20Z" />
             </svg>
           </button>
-          <button onClick={nextStep} className="-mt-4">
+          <button
+            onClick={nextStep}
+            className="-mt-4 lg:mt-36 lg:w-12 lg:h-12 lg:bg-transparent/80 lg:rounded-full lg:flex lg:items-center lg:relative"
+          >
             <svg
-              className="w-3 h-auto text-black md:text-white fill-current"
+              className="w-3 h-auto text-black md:text-white fill-current lg:absolute lg:left-5"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 10 20"
             >
